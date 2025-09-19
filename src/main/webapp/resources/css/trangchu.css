@@ -1,0 +1,58 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+.header {
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+.header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+}
+.header nav ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+.header nav a { text-decoration: none; color: #000; }
+
+.banner {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+  background: #bde3fa;
+}
+.banner img { max-width: 400px; border-radius: 12px; }
+
+.promo {
+  background: linear-gradient(90deg, #e83e3e, #23a6d5);
+  padding: 20px;
+  text-align: center;
+}
+.slider { display: flex; align-items: center; }
+.slides { display: flex; overflow: hidden; gap: 20px; }
+.card { background: #fff; padding: 10px; border-radius: 10px; min-width: 120px; }
+
+.products, .blog {
+  padding: 30px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+  gap: 20px;
+}
+.card img, .post img {
+  width: 100%;
+  border-radius: 10px;
+}
+.price { color: red; font-weight: bold; }
+
+footer {
+  background: #222;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}

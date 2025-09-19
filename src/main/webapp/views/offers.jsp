@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KT Store</title>
-    <link rel="stylesheet" href="../resources/css/index.css">
+    <title>Ưu Đãi - KT Store</title>
+    <link rel="stylesheet" href="../resources/css/offers.css">
 </head>
 <body>
     <header>
         <div class="logo">KT</div>
         <input type="text" placeholder="Tìm Kiếm Sản phẩm" class="search-bar">
         <div class="icons">
-            <a href="views/cart.jsp"><i class="cart-icon">🛒</i></a>
+            <a href="cart.jsp"><i class="cart-icon">🛒</i></a>
             <a href="login.jsp">Đăng Nhập</a>
         </div>
     </header>
@@ -23,10 +23,18 @@
         <a href="repair.jsp">THU ĐIỆN THOẠI</a>
         <a href="appointment.jsp">SỬA CHỮA</a>
     </nav>
-    <div class="hero">
-        <h1>Chào mừng đến với KT Store</h1>
-        <p>Mua sắm điện thoại mới - cũ và dịch vụ sửa chữa chuyên nghiệp</p>
-        <button onclick="window.location.href='views/new-phones.jsp'">Mua Ngay</button>
+    <div class="offers-content">
+        <h2>Ưu Đãi Đặc Biệt</h2>
+        <div class="offer-item">
+            <h3>Giảm 20% iPhone 14</h3>
+            <p>Chỉ còn 11,999,000 VNĐ - Hết hạn: 25/09/2025</p>
+            <button onclick="alert('Thêm ưu đãi vào giỏ hàng!')">Nhận Ưu Đãi</button>
+        </div>
+        <div class="offer-item">
+            <h3>Trao đổi cũ lấy mới - Tặng 500k</h3>
+            <p>Áp dụng cho tất cả dòng Samsung - Hết hạn: 30/09/2025</p>
+            <button onclick="alert('Thêm ưu đãi vào giỏ hàng!')">Nhận Ưu Đãi</button>
+        </div>
     </div>
     <footer>
         <div class="footer-content">

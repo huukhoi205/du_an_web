@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KT Store</title>
-    <link rel="stylesheet" href="../resources/css/index.css">
+    <title>Đăng Nhập - KT Store</title>
+    <link rel="stylesheet" href="../resources/css/login.css">
 </head>
 <body>
     <header>
         <div class="logo">KT</div>
         <input type="text" placeholder="Tìm Kiếm Sản phẩm" class="search-bar">
         <div class="icons">
-            <a href="views/cart.jsp"><i class="cart-icon">🛒</i></a>
+            <a href="cart.jsp"><i class="cart-icon">🛒</i></a>
             <a href="login.jsp">Đăng Nhập</a>
         </div>
     </header>
@@ -23,10 +23,13 @@
         <a href="repair.jsp">THU ĐIỆN THOẠI</a>
         <a href="appointment.jsp">SỬA CHỮA</a>
     </nav>
-    <div class="hero">
-        <h1>Chào mừng đến với KT Store</h1>
-        <p>Mua sắm điện thoại mới - cũ và dịch vụ sửa chữa chuyên nghiệp</p>
-        <button onclick="window.location.href='views/new-phones.jsp'">Mua Ngay</button>
+    <div class="login-content">
+        <h2>Đăng Nhập</h2>
+        <form>
+            <input type="text" placeholder="Tên đăng nhập" required>
+            <input type="password" placeholder="Mật khẩu" required>
+            <button type="submit">Đăng Nhập</button>
+        </form>
     </div>
     <footer>
         <div class="footer-content">
