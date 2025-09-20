@@ -22,7 +22,6 @@
             </div>
         </div>
     </header>
-
     <!-- Navigation -->
     <nav class="navigation">
         <div class="nav-container">
