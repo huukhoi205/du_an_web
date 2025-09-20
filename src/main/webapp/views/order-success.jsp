@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giỏ Hàng - KT Store</title>
-    <link rel="stylesheet" href="../resources/css/cart.css">
+    <title>Đặt Hàng Thành Công - KT Store</title>
+    <link rel="stylesheet" href="../resources/css/order-success.css">
 </head>
 <body>
     <header>
@@ -29,23 +29,12 @@
         <a href="about-us.jsp">VỀ CHÚNG TÔI</a>
         <a href="privacy-policy.jsp">BẢO MẬT</a>
     </nav>
-    <div class="cart-content">
-        <h2>Giỏ Hàng</h2>
+    <div class="success-content">
+        <h2>Đặt Hàng Thành Công!</h2>
         <p>Ngày giờ: <%= new Date() %></p>
-        <div class="cart-item">
-            <h3>iPhone 14</h3>
-            <p>Giá: 15,999,000 VNĐ | Số lượng: 1</p>
-            <button onclick="alert('Xóa khỏi giỏ hàng!')">Xóa</button>
-        </div>
-        <div class="cart-item">
-            <h3>Samsung S23</h3>
-            <p>Giá: 12,999,000 VNĐ | Số lượng: 2</p>
-            <button onclick="alert('Xóa khỏi giỏ hàng!')">Xóa</button>
-        </div>
-        <div class="cart-total">
-            <h3>Tổng cộng: 41,997,000 VNĐ</h3>
-            <button onclick="window.location.href='payment-methods.jsp'">Tiến Hành Thanh Toán</button>
-        </div>
+        <p>Cảm ơn bạn đã mua sắm tại KT Store. Đơn hàng của bạn sẽ được giao trong vòng 2-3 ngày làm việc.</p>
+        <p>Mã đơn hàng: #KT20250919-001</p>
+        <button onclick="window.location.href='index.jsp'">Quay Về Trang Chủ</button>
     </div>
     <footer>
         <div class="footer-content">

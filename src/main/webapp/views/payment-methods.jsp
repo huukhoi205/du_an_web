@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giỏ Hàng - KT Store</title>
-    <link rel="stylesheet" href="../resources/css/cart.css">
+    <title>Phương Thức Thanh Toán - KT Store</title>
+    <link rel="stylesheet" href="../resources/css/payment-methods.css">
 </head>
 <body>
     <header>
@@ -29,23 +29,23 @@
         <a href="about-us.jsp">VỀ CHÚNG TÔI</a>
         <a href="privacy-policy.jsp">BẢO MẬT</a>
     </nav>
-    <div class="cart-content">
-        <h2>Giỏ Hàng</h2>
+    <div class="payment-content">
+        <h2>Chọn Phương Thức Thanh Toán</h2>
         <p>Ngày giờ: <%= new Date() %></p>
-        <div class="cart-item">
-            <h3>iPhone 14</h3>
-            <p>Giá: 15,999,000 VNĐ | Số lượng: 1</p>
-            <button onclick="alert('Xóa khỏi giỏ hàng!')">Xóa</button>
+        <div class="payment-option">
+            <input type="radio" name="payment" id="cod" value="cod" checked>
+            <label for="cod">Thanh Toán Khi Nhận Hàng (COD)</label>
         </div>
-        <div class="cart-item">
-            <h3>Samsung S23</h3>
-            <p>Giá: 12,999,000 VNĐ | Số lượng: 2</p>
-            <button onclick="alert('Xóa khỏi giỏ hàng!')">Xóa</button>
+        <div class="payment-option">
+            <input type="radio" name="payment" id="bank" value="bank">
+            <label for="bank">Chuyển Khoản Ngân Hàng</label>
         </div>
-        <div class="cart-total">
-            <h3>Tổng cộng: 41,997,000 VNĐ</h3>
-            <button onclick="window.location.href='payment-methods.jsp'">Tiến Hành Thanh Toán</button>
+        <div class="payment-option">
+            <input type="radio" name="payment" id="card" value="card">
+            <label for="card">Thẻ Tín Dụng/Ghi Nợ</label>
         </div>
+        <button onclick="window.location.href='order.jsp'">Tiếp Tục Đặt Hàng</button>
+        <button onclick="window.location.href='cart.jsp'">Quay Lại Giỏ Hàng</button>
     </div>
     <footer>
         <div class="footer-content">

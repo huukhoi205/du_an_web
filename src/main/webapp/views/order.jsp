@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giỏ Hàng - KT Store</title>
-    <link rel="stylesheet" href="../resources/css/cart.css">
+    <title>Đặt Hàng - KT Store</title>
+    <link rel="stylesheet" href="../resources/css/order.css">
 </head>
 <body>
     <header>
@@ -29,23 +29,23 @@
         <a href="about-us.jsp">VỀ CHÚNG TÔI</a>
         <a href="privacy-policy.jsp">BẢO MẬT</a>
     </nav>
-    <div class="cart-content">
-        <h2>Giỏ Hàng</h2>
+    <div class="order-content">
+        <h2>Thông Tin Đặt Hàng</h2>
         <p>Ngày giờ: <%= new Date() %></p>
-        <div class="cart-item">
-            <h3>iPhone 14</h3>
-            <p>Giá: 15,999,000 VNĐ | Số lượng: 1</p>
-            <button onclick="alert('Xóa khỏi giỏ hàng!')">Xóa</button>
-        </div>
-        <div class="cart-item">
-            <h3>Samsung S23</h3>
-            <p>Giá: 12,999,000 VNĐ | Số lượng: 2</p>
-            <button onclick="alert('Xóa khỏi giỏ hàng!')">Xóa</button>
-        </div>
-        <div class="cart-total">
-            <h3>Tổng cộng: 41,997,000 VNĐ</h3>
-            <button onclick="window.location.href='payment-methods.jsp'">Tiến Hành Thanh Toán</button>
-        </div>
+        <form>
+            <input type="text" placeholder="Họ và tên" required>
+            <input type="tel" placeholder="Số điện thoại" required>
+            <input type="email" placeholder="Email" required>
+            <input type="text" placeholder="Địa chỉ giao hàng" required>
+            <div class="order-summary">
+                <h3>Tóm Tắt Đơn Hàng</h3>
+                <p>iPhone 14: 15,999,000 VNĐ x 1</p>
+                <p>Samsung S23: 12,999,000 VNĐ x 2</p>
+                <h3>Tổng cộng: 41,997,000 VNĐ</h3>
+            </div>
+            <button type="submit" onclick="window.location.href='order-success.jsp'">Xác Nhận Đặt Hàng</button>
+            <button type="button" onclick="window.location.href='payment-methods.jsp'">Quay Lại</button>
+        </form>
     </div>
     <footer>
         <div class="footer-content">
