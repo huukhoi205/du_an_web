@@ -1,7 +1,7 @@
-package com.ktstore.dao;
+package dao;
 
-import com.ktstore.model.Product;
-import com.ktstore.util.DatabaseConnection;
+import model.Product;
+import util.DatabaseConnection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
