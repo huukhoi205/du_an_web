@@ -16,9 +16,9 @@
                 <input type="text" class="search-bar" placeholder="Tìm Kiếm Sản phẩm">
             </div>
             <div class="header-icons">
-                <a href="views/cart.jsp">🛒</a>
-                <a href="views/wishlist.jsp">❤️</a>
-                <a href="views/login.jsp">ĐĂNG NHẬP</a>
+                <a href="cart.jsp">🛒</a>
+                <a href="wishlist.jsp">❤️</a>
+                <a href="login.jsp">ĐĂNG NHẬP</a>
             </div>
         </div>
     </header>
@@ -30,10 +30,10 @@
                 ☰ DANH<br>MỤC
             </button>
             <ul class="nav-links">
-                <li><a href="views/new-phones.jsp">ĐIỆN THOẠI MỚI ▼</a></li>
-                <li><a href="views/used-phones.jsp">ĐIỆN THOẠI CŨ ▼</a></li>
-                <li><a href="views/repair.jsp">THU ĐIỆN THOẠI</a></li>
-                <li><a href="views/appointment.jsp">SỬA CHỮA</a></li>
+                <li><a href="new-phones.jsp">ĐIỆN THOẠI MỚI ▼</a></li>
+                <li><a href="used-phones.jsp">ĐIỆN THOẠI CŨ ▼</a></li>
+                <li><a href="repair.jsp">THU ĐIỆN THOẠI</a></li>
+                <li><a href="appointment.jsp">SỬA CHỮA</a></li>
             </ul>
         </div>
     </nav>
