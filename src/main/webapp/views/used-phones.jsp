@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="dao.ProductDAO" %>
+<%@ page import="dao.admin.ProductDAO" %>
 <%@ page import="model.Product" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.NumberFormat" %>

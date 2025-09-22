@@ -1,88 +1,44 @@
 package util;
 
-import java.sql.*;
-import java.util.Properties;
+import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
 
+/**
+ * DatabaseConnection dùng chung cho toàn bộ DAO.
+ * Đọc cấu hình từ file resources/db.properties
+ */
 public class DatabaseConnection {
-    private static final String CONFIG_FILE = "..resources/db.properties";
-    private static String URL;
-    private static String USERNAME;
-    private static String PASSWORD;
-    private static String DRIVER;
-    
+    private static String url;
+    private static String username;
+    private static String password;
+    private static String driverClassName;
+
     static {
-        loadConfig();
-    }
-    
-    private static void loadConfig() {
-        try (InputStream input = DatabaseConnection.class.getResourceAsStream(CONFIG_FILE)) {
+        try (InputStream input = DatabaseConnection.class.getClassLoader()
+                .getResourceAsStream("db.properties")) {
             Properties prop = new Properties();
             if (input != null) {
                 prop.load(input);
-                DRIVER = prop.getProperty("db.driver", "com.mysql.cj.jdbc.Driver");
-                URL = prop.getProperty("db.url", "jdbc:mysql://localhost:3306/QuanLyBanDienThoai?useSSL=false&serverTimezone=UTC&characterEncoding=utf8");
-                USERNAME = prop.getProperty("db.username", "root");
-                PASSWORD = prop.getProperty("db.password", "");
+                driverClassName = prop.getProperty("db.driverClassName");
+                url = prop.getProperty("db.url");
+                username = prop.getProperty("db.username");
+                password = prop.getProperty("db.password");
+                Class.forName(driverClassName);
             } else {
-                // Default values if config file not found
-                DRIVER = "com.mysql.cj.jdbc.Driver";
-                URL = "jdbc:mysql://localhost:3306/QuanLyBanDienThoai?useSSL=false&serverTimezone=UTC&characterEncoding=utf8";
-                USERNAME = "root";
-                PASSWORD = "";
+                throw new RuntimeException("Không tìm thấy db.properties");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            // Set default values on error
-            DRIVER = "com.mysql.cj.jdbc.Driver";
-            URL = "jdbc:mysql://localhost:3306/QuanLyBanDienThoai?useSSL=false&serverTimezone=UTC&characterEncoding=utf8";
-            USERNAME = "root";
-            PASSWORD = "";
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+            throw new ExceptionInInitializerError(ex);
         }
     }
-    
     public static Connection getConnection() throws SQLException {
-        try {
-            Class.forName(DRIVER);
-            return DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        } catch (ClassNotFoundException e) {
-            throw new SQLException("Database driver not found: " + e.getMessage());
-        }
-    }
-    
-    public static void closeConnection(Connection conn) {
-        if (conn != null) {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    
-    public static void closeStatement(Statement stmt) {
-        if (stmt != null) {
-            try {
-                stmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    
-    public static void closeResultSet(ResultSet rs) {
-        if (rs != null) {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    
-    public static void close(Connection conn, Statement stmt, ResultSet rs) {
-        closeResultSet(rs);
-        closeStatement(stmt);
-        closeConnection(conn);
+        Connection conn = DriverManager.getConnection(url, username, password);
+        System.out.println("DB connected: " + conn.isValid(1)); // True nếu kết nối OK
+        return conn;
     }
 }
