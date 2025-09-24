@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>Chi tiết / Sửa đơn hàng</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-common.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-order.css">
 </head>
 <body>
     <!-- Header -->

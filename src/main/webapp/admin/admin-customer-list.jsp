@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Danh sách khách hàng</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-common.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-customer.css">
 </head>
 <body>
     <!-- Header -->

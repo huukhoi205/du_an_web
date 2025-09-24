@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Tạo đơn hàng</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-common.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-order.css">
 </head>
 <body>
     <!-- Header -->

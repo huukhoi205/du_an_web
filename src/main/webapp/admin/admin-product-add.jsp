@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Thêm sản phẩm</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-common.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-product.css">
 </head>
 <body>
     <!-- Header -->
