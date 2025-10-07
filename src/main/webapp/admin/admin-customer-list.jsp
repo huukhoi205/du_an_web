@@ -16,7 +16,6 @@
             Admin
         </div>
     </div>
-
     <!-- Layout Container -->
     <div class="admin-layout">
         <!-- Sidebar -->
@@ -57,6 +56,7 @@
                         <th>Họ tên</th>
                         <th>Email</th>
                         <th>Vai trò</th>
+                        <th>Trạng thái</th>
                         <th>Hành động</th>
                     </tr>
                     </thead>
@@ -67,6 +67,7 @@
                             <td>${c.hoTen}</td>
                             <td>${c.email}</td>
                             <td>${c.vaiTro}</td>
+                            <td>${c.trangThai ? 'Hoạt động' : 'Khóa'}</td>
                             <td>
                                 <a href="${pageContext.request.contextPath}/admin/customer/edit?maND=${c.maND}" class="btn">Sửa</a>
                                 <a href="${pageContext.request.contextPath}/admin/customer/delete?maND=${c.maND}" onclick="return confirm('Xóa khách hàng này?')" class="btn btn-danger">Xóa</a>

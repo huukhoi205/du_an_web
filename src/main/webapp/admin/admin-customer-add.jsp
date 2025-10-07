@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,11 +53,33 @@
                     <label>Email:</label>
                     <input type="email" name="email" required />
 
+                    <label>Ngày tạo (người dùng):</label>
+                    <input type="datetime-local" name="ngayTao" value="<fmt:formatDate value="<%= new java.util.Date() %>" pattern="yyyy-MM-dd'T'HH:mm" />" required />
+
+                    <label>Số điện thoại:</label>
+                    <input type="text" name="soDT" required />
+
+                    <label>Địa chỉ:</label>
+                    <input type="text" name="diaChi" required />
+
+                    <label>Tên đăng nhập:</label>
+                    <input type="text" name="tenDangNhap" required />
+
                     <label>Mật khẩu:</label>
                     <input type="password" name="matKhau" required />
 
                     <label>Vai trò:</label>
-                    <input type="text" name="vaiTro" value="user" />
+                    <select name="vaiTro">
+                        <option value="KhachHang">Khách hàng</option>
+                        <option value="Admin">Admin</option>
+                        <option value="NhanVien">Nhân viên</option>
+                    </select>
+
+                    <label>Trạng thái:</label>
+                    <input type="checkbox" name="trangThai" checked /> Hoạt động
+
+                    <label>Ngày tạo (tài khoản):</label>
+                    <input type="datetime-local" name="ngayTaoTK" value="<fmt:formatDate value="<%= new java.util.Date() %>" pattern="yyyy-MM-dd'T'HH:mm" />" required />
 
                     <div class="form-actions">
                         <button type="submit">Lưu</button>

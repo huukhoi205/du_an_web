@@ -73,8 +73,6 @@
                             <td>
                                 <form action="${pageContext.request.contextPath}/admin/order/edit" method="post" style="display:inline-block">
                                     <input type="hidden" name="maDH" value="${o.maDH}" />
-                                    <input type="text" name="trangThai" value="${o.trangThai}" style="width:110px" />
-                                    <input type="number" step="0.01" name="tongTien" value="${o.tongTien}" style="width:90px" />
                                     <button type="submit" class="btn">Cập nhật</button>
                                 </form>
                                 <a href="${pageContext.request.contextPath}/admin/order/delete?maDH=${o.maDH}" onclick="return confirm('Xóa đơn hàng này?')" class="btn btn-danger">Xóa</a>

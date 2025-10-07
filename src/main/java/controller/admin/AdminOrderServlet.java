@@ -23,8 +23,13 @@ public class AdminOrderServlet extends HttpServlet {
 
         switch (action) {
             case "/list":
-                request.setAttribute("orders", orderService.getAllOrders());
-                request.getRequestDispatcher("/admin/admin-order-list.jsp").forward(request, response);
+                listOrders(request, response);
+                break;
+            case "/edit":
+                showEditForm(request, response);
+                break;
+            case "/add":
+                showAddForm(request, response);
                 break;
             case "/delete":
                 deleteOrder(request, response);
@@ -52,26 +57,69 @@ public class AdminOrderServlet extends HttpServlet {
         }
     }
 
-    private void addOrder(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int maND = Integer.parseInt(request.getParameter("maND"));
-        String trangThai = request.getParameter("trangThai");
-        BigDecimal tongTien = new BigDecimal(request.getParameter("tongTien"));
-        java.sql.Timestamp ngayDat = new java.sql.Timestamp(System.currentTimeMillis());
-        orderService.addOrder(new Order(0, maND, trangThai, tongTien, ngayDat));
-        response.sendRedirect(request.getContextPath() + "/admin/order/list");
+    private void listOrders(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        request.setAttribute("orders", orderService.getAllOrders());
+        request.getRequestDispatcher("/admin/admin-order-list.jsp").forward(request, response);
     }
 
-    private void updateOrder(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
         int maDH = Integer.parseInt(request.getParameter("maDH"));
-        String trangThai = request.getParameter("trangThai");
-        BigDecimal tongTien = new BigDecimal(request.getParameter("tongTien"));
-        orderService.updateOrder(maDH, trangThai, tongTien);
-        response.sendRedirect(request.getContextPath() + "/admin/order/list");
+        Order order = orderService.getOrderById(maDH);
+        request.setAttribute("order", order);
+        request.getRequestDispatcher("/admin/admin-order-edit.jsp").forward(request, response);
     }
 
-    private void deleteOrder(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int maDH = Integer.parseInt(request.getParameter("maDH"));
-        orderService.deleteOrder(maDH);
-        response.sendRedirect(request.getContextPath() + "/admin/order/list");
+    private void showAddForm(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/admin/admin-order-add.jsp").forward(request, response);
+    }
+
+    private void addOrder(HttpServletRequest request, HttpServletResponse response) 
+            throws IOException {
+        try {
+            int maND = Integer.parseInt(request.getParameter("maND"));
+            String trangThai = request.getParameter("trangThai");
+            BigDecimal tongTien = new BigDecimal(request.getParameter("tongTien"));
+            java.sql.Timestamp ngayDat = new java.sql.Timestamp(System.currentTimeMillis());
+            
+            Order order = new Order(0, maND, trangThai, tongTien, ngayDat);
+            orderService.addOrder(order);
+            
+            response.sendRedirect(request.getContextPath() + "/admin/order/list");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/admin/order/list?error=add");
+        }
+    }
+
+    private void updateOrder(HttpServletRequest request, HttpServletResponse response) 
+            throws IOException {
+        try {
+            int maDH = Integer.parseInt(request.getParameter("maDH"));
+            String trangThai = request.getParameter("trangThai");
+            BigDecimal tongTien = new BigDecimal(request.getParameter("tongTien"));
+            
+            orderService.updateOrder(maDH, trangThai, tongTien);
+            
+            response.sendRedirect(request.getContextPath() + "/admin/order/list");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/admin/order/list?error=update");
+        }
+    }
+
+    private void deleteOrder(HttpServletRequest request, HttpServletResponse response) 
+            throws IOException {
+        try {
+            int maDH = Integer.parseInt(request.getParameter("maDH"));
+            orderService.deleteOrder(maDH);
+            
+            response.sendRedirect(request.getContextPath() + "/admin/order/list");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/admin/order/list?error=delete");
+        }
     }
 }
