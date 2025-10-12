@@ -8,6 +8,18 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-order.css">
 </head>
 <body>
+    <!-- Error Message -->
+    <c:if test="${not empty param.error}">
+        <p style="color: red;">
+            <c:choose>
+                <c:when test="${param.error == 'invalidMaDH'}">Mã đơn hàng không hợp lệ.</c:when>
+                <c:when test="${param.error == 'orderNotFound'}">Không tìm thấy đơn hàng.</c:when>
+                <c:when test="${param.error == 'serverError'}">Lỗi máy chủ, vui lòng thử lại.</c:when>
+                <c:otherwise>Lỗi không xác định.</c:otherwise>
+            </c:choose>
+        </p>
+    </c:if>
+
     <!-- Header -->
     <div class="header">
         <div class="logo">

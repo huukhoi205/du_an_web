@@ -7,6 +7,27 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-order.css">
 </head>
 <body>
+    <!-- Error Message -->
+    <c:if test="${not empty param.error}">
+        <p style="color: red;">
+            <c:choose>
+                <c:when test="${param.error == 'invalidMaND'}">Mã khách hàng không hợp lệ.</c:when>
+                <c:when test="${param.error == 'invalidTrangThai'}">Trạng thái không hợp lệ hoặc quá dài.</c:when>
+                <c:when test="${param.error == 'invalidTongTien'}">Tổng tiền không hợp lệ.</c:when>
+                <c:when test="${param.error == 'negativeTongTien'}">Tổng tiền không được âm.</c:when>
+                
+
+                <c:when test="${param.error == 'invalidInput'}">Dữ liệu đầu vào không hợp lệ.</c:when>
+                <c:when test="${param.error == 'serverError'}">Lỗi máy chủ, vui lòng thử lại.</c:when>
+                <c:otherwise>Lỗi không xác định: ${param.error}</c:otherwise>
+            </c:choose>
+        </p>
+    </c:if>
+
+    <c:if test="${not empty param.success}">
+        <p style="color: green;">Thêm đơn hàng thành công!</p>
+    </c:if>
+
     <!-- Header -->
     <div class="header">
         <div class="logo">
@@ -50,22 +71,30 @@
                     <label>Khách hàng (maND):</label>
                     <c:choose>
                         <c:when test="${not empty customers}">
-                            <select name="maND">
+                            <select name="maND" required>
+                                <option value="">-- Chọn khách hàng --</option>
                                 <c:forEach var="c" items="${customers}">
                                     <option value="${c.maND}">${c.hoTen} (${c.maND})</option>
                                 </c:forEach>
                             </select>
                         </c:when>
                         <c:otherwise>
-                            <input type="number" name="maND" />
+                            <input type="number" name="maND" required placeholder="Nhập mã khách hàng" />
+                            <small style="color: #666;">Lưu ý: Mã khách hàng phải tồn tại trong hệ thống (hiện có: 1, 2, 3)</small>
                         </c:otherwise>
                     </c:choose>
 
                     <label>Trạng thái:</label>
-                    <input type="text" name="trangThai" value="Đang xử lý"/>
+                    <select name="trangThai" required>
+                        <option value="ChoXacNhan" selected>Chờ xác nhận</option>
+                        <option value="DaThanhToan">Đã thanh toán</option>
+                        <option value="DangGiao">Đang giao</option>
+                        <option value="HoanTat">Hoàn tất</option>
+                        <option value="Huy">Hủy</option>
+                    </select>
 
                     <label>Tổng tiền:</label>
-                    <input type="number" step="0.01" name="tongTien" value="0" />
+                    <input type="number" step="1" name="tongTien" value="0" required min="0" placeholder="Nhập tổng tiền"/>
 
                     <div class="form-actions">
                         <button type="submit">Tạo</button>

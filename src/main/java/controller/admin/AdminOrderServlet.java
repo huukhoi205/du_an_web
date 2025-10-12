@@ -2,6 +2,7 @@ package controller.admin;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,9 +26,6 @@ public class AdminOrderServlet extends HttpServlet {
             case "/list":
                 listOrders(request, response);
                 break;
-            case "/edit":
-                showEditForm(request, response);
-                break;
             case "/add":
                 showAddForm(request, response);
                 break;
@@ -46,6 +44,9 @@ public class AdminOrderServlet extends HttpServlet {
         if (action == null) action = "/list";
 
         switch (action) {
+            case "/edit":
+                showEditForm(request, response);
+                break;
             case "/update":
                 updateOrder(request, response);
                 break;
@@ -65,10 +66,29 @@ public class AdminOrderServlet extends HttpServlet {
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        int maDH = Integer.parseInt(request.getParameter("maDH"));
-        Order order = orderService.getOrderById(maDH);
-        request.setAttribute("order", order);
-        request.getRequestDispatcher("/admin/admin-order-edit.jsp").forward(request, response);
+        try {
+            String maDHParam = request.getParameter("maDH");
+            if (maDHParam == null || maDHParam.trim().isEmpty()) {
+                response.sendRedirect(request.getContextPath() + "/admin/order/list?error=invalidMaDH");
+                return;
+            }
+
+            int maDH = Integer.parseInt(maDHParam);
+            Order order = orderService.getOrderById(maDH);
+            if (order == null) {
+                response.sendRedirect(request.getContextPath() + "/admin/order/list?error=orderNotFound");
+                return;
+            }
+
+            request.setAttribute("order", order);
+            request.getRequestDispatcher("/admin/admin-order-edit.jsp").forward(request, response);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/admin/order/list?error=invalidMaDH");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/admin/order/list?error=serverError");
+        }
     }
 
     private void showAddForm(HttpServletRequest request, HttpServletResponse response) 
@@ -78,19 +98,70 @@ public class AdminOrderServlet extends HttpServlet {
 
     private void addOrder(HttpServletRequest request, HttpServletResponse response) 
             throws IOException {
+        String error = null;
         try {
-            int maND = Integer.parseInt(request.getParameter("maND"));
+            String maNDParam = request.getParameter("maND");
             String trangThai = request.getParameter("trangThai");
-            BigDecimal tongTien = new BigDecimal(request.getParameter("tongTien"));
-            java.sql.Timestamp ngayDat = new java.sql.Timestamp(System.currentTimeMillis());
+            String tongTienParam = request.getParameter("tongTien");
+
+            // Validate inputs
+            if (maNDParam == null || maNDParam.trim().isEmpty()) {
+                error = "invalidMaND";
+            } else if (trangThai == null || trangThai.trim().isEmpty()) {
+                error = "invalidTrangThai";
+            } else if (tongTienParam == null || tongTienParam.trim().isEmpty()) {
+                error = "invalidTongTien";
+            } else {
+                int maND = Integer.parseInt(maNDParam);
+                BigDecimal tongTien = new BigDecimal(tongTienParam).setScale(0, BigDecimal.ROUND_DOWN);
+                
+                if (tongTien.compareTo(BigDecimal.ZERO) < 0) {
+                    error = "negativeTongTien";
+                } else {
+                    // Kiểm tra trạng thái có hợp lệ không (phải khớp với ENUM trong database)
+                    String[] validStatuses = {"ChoXacNhan", "DaThanhToan", "DangGiao", "HoanTat", "Huy"};
+                    boolean isValidStatus = false;
+                    for (String status : validStatuses) {
+                        if (status.equals(trangThai)) {
+                            isValidStatus = true;
+                            break;
+                        }
+                    }
+                    
+                    if (!isValidStatus) {
+                        error = "invalidTrangThai";
+                    } else {
+                        System.out.println("AdminOrderServlet: Thử thêm order - maND=" + maND + 
+                                         ", trangThai=" + trangThai + ", tongTien=" + tongTien);
+                        
+                        java.sql.Timestamp ngayDat = new java.sql.Timestamp(System.currentTimeMillis());
+                        Order order = new Order(0, maND, trangThai, tongTien, ngayDat);
+                        
+                        boolean inserted = orderService.addOrder(order);
+                        if (!inserted) {
+                            error = "insertFailed-MaND=" + maND + " - Kiểm tra mã khách hàng có tồn tại không";
+                            System.err.println("AdminOrderServlet: Không thể thêm order, có thể do MaND=" + maND + " không tồn tại");
+                        } else {
+                            System.out.println("AdminOrderServlet: Thêm order thành công, maDH=" + order.getMaDH());
+                            response.sendRedirect(request.getContextPath() + "/admin/order/list?success=added");
+                            return;
+                        }
+                    }
+                }
+            }
             
-            Order order = new Order(0, maND, trangThai, tongTien, ngayDat);
-            orderService.addOrder(order);
+            if (error != null) {
+                response.sendRedirect(request.getContextPath() + "/admin/order/add?error=" + error);
+            }
             
-            response.sendRedirect(request.getContextPath() + "/admin/order/list");
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
+            System.err.println("AdminOrderServlet: NumberFormatException: " + e.getMessage());
             e.printStackTrace();
-            response.sendRedirect(request.getContextPath() + "/admin/order/list?error=add");
+            response.sendRedirect(request.getContextPath() + "/admin/order/add?error=invalidInput");
+        } catch (Exception e) {
+            System.err.println("AdminOrderServlet: Exception khi addOrder: " + e.getMessage());
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/admin/order/add?error=serverError");
         }
     }
 

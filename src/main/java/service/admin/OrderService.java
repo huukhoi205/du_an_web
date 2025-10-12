@@ -2,9 +2,12 @@ package service.admin;
 
 import java.util.List;
 import dao.admin.OrderDAO;
+import dao.admin.UserDAO;
 import model.admin.Order;
+
 public class OrderService {
     private OrderDAO orderDAO = new OrderDAO();
+    private UserDAO userDAO = new UserDAO();
 
     public List<Order> getAllOrders() {
         return orderDAO.selectAllOrders();
@@ -15,6 +18,9 @@ public class OrderService {
     }
 
     public boolean addOrder(Order order) {
+        if (!userDAO.userExists(order.getMaND())) {
+            return false;
+        }
         return orderDAO.insertOrder(order);
     }
 
