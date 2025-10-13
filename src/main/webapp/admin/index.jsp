@@ -3,7 +3,10 @@
 <html>
 <head>
     <title>Quản lý KT Store</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-common.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-base.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-components.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-pages.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-responsive.css">
 </head>
 <body>
     <!-- Header -->
@@ -22,22 +25,12 @@
         <div class="sidebar">
             <div class="sidebar-title">Hệ thống quản trị</div>
             <nav class="sidebar-menu">
-                <a href="${pageContext.request.contextPath}/admin/product/list" class="menu-item">
-                    <span class="menu-icon">👤</span>
-                    <span>Sản phẩm</span>
-                </a>
-                <a href="${pageContext.request.contextPath}/admin/category/list" class="menu-item">
-                    <span class="menu-icon">👤</span>
-                    <span>Danh mục</span>
-                </a>
-                <a href="${pageContext.request.contextPath}/admin/order/list" class="menu-item">
-                    <span class="menu-icon">👤</span>
-                    <span>Đơn hàng</span>
-                </a>
-                <a href="${pageContext.request.contextPath}/admin/customer/list" class="menu-item">
-                    <span class="menu-icon">👤</span>
-                    <span>Khách hàng</span>
-                </a>
+            <a href="${pageContext.request.contextPath}/admin/product/list" class="menu-item"><span>📦</span>Sản phẩm</a>
+            <a href="${pageContext.request.contextPath}/admin/category/list" class="menu-item"><span>📂</span>Danh mục</a>
+            <a href="${pageContext.request.contextPath}/admin/order/list" class="menu-item"><span>🧾</span>Đơn hàng</a>
+            <a href="${pageContext.request.contextPath}/admin/customer/list" class="menu-item"><span>👥</span>Khách hàng</a>
+            <a href="${pageContext.request.contextPath}/AdminOldDeviceServlet" class="menu-item"><span>♻️</span>Thu máy cũ</a>
+            <a href="${pageContext.request.contextPath}/AdminRepairScheduleServlet" class="menu-item"><span>🛠️</span>Lịch sửa chữa</a>
             </nav>
         </div>
 

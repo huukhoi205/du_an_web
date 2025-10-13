@@ -4,7 +4,10 @@
 <html>
 <head>
     <title>Quản lý lịch sửa chữa</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-category.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-base.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-components.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-pages.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-responsive.css">
 </head>
 <body>
 <!-- Header -->

@@ -1,0 +1,175 @@
+/* Responsive Design */
+@media (max-width: 768px) {
+    .admin-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        position: static;
+        top: auto;
+        bottom: auto;
+        transform: none;
+        flex-direction: row;
+        overflow-x: auto;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .admin-container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn {
+        padding: 8px 15px;
+        font-size: 13px;
+    }
+
+    .form-actions .btn {
+        display: block;
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    table thead,
+    table tbody,
+    table th,
+    table td,
+    table tr {
+        display: block;
+    }
+
+    table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    table tr {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 4px;
+    }
+
+    table td {
+        border: none;
+        position: relative;
+        padding-left: 50% !important;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    table td:before {
+        content: attr(data-label) ": ";
+        position: absolute;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+    }
+
+    .product-form .form-grid,
+    .product-detail-grid,
+    .order-info-grid,
+    .order-stats,
+    .filter-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .product-detail-image {
+        max-width: 100%;
+        height: 250px;
+    }
+
+    .product-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .date-range {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .quick-actions {
+        justify-content: center;
+    }
+
+    .timeline-item {
+        padding-left: 25px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .toolbar,
+    .form-actions,
+    .btn {
+        display: none;
+    }
+
+    .admin-container {
+        box-shadow: none;
+        padding: 0;
+    }
+
+    table {
+        box-shadow: none;
+    }
+
+    .order-filters,
+    .quick-actions {
+        display: none;
+    }
+
+    .order-status {
+        background: none !important;
+        color: #000 !important;
+        border: 1px solid #000 !important;
+    }
+}
+
+/* Focus Management */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus,
+.btn:focus {
+    outline: 2px solid #5cb85c;
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .btn {
+        border-width: 2px;
+    }
+
+    table {
+        border: 2px solid #333;
+    }
+
+    th, td {
+        border-width: 2px;
+    }
+}
