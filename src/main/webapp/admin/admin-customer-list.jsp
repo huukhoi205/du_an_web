@@ -48,6 +48,8 @@
                         <th>MaND</th>
                         <th>Họ tên</th>
                         <th>Email</th>
+                        <th>Số điện thoại</th>
+                        <th>Địa chỉ</th>
                         <th>Vai trò</th>
                         <th>Trạng thái</th>
                         <th>Hành động</th>
@@ -59,6 +61,8 @@
                             <td>${c.maND}</td>
                             <td>${c.hoTen}</td>
                             <td>${c.email}</td>
+                            <td>${c.soDT != null && !c.soDT.isEmpty() ? c.soDT : 'Chưa có'}</td>
+                            <td>${c.diaChi != null && !c.diaChi.isEmpty() ? c.diaChi : 'Chưa có'}</td>
                             <td>${c.vaiTro}</td>
                             <td>${c.trangThai ? 'Hoạt động' : 'Khóa'}</td>
                             <td>
