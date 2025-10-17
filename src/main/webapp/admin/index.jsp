@@ -18,7 +18,6 @@
             Admin
         </div>
     </div>
-
     <!-- Layout Container -->
     <div class="admin-layout">
         <!-- Sidebar -->
@@ -33,7 +32,6 @@
             <a href="${pageContext.request.contextPath}/AdminRepairScheduleServlet" class="menu-item"><span>🛠️</span>Lịch sửa chữa</a>
             </nav>
         </div>
-
         <!-- Main Content -->
         <div class="main-content">
             <div class="admin-container">

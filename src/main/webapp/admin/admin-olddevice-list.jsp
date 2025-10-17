@@ -54,6 +54,7 @@
                     <th>Giá đề xuất</th>
                     <th>Giá thỏa thuận</th>
                     <th>Trạng thái</th>
+                    <th>Địa chỉ nhận</th>
                     <th>Hành động</th>
                 </tr>
                 </thead>
@@ -68,6 +69,7 @@
                         <td>${item.giaDeXuat}</td>
                         <td>${item.giaThoaThuan}</td>
                         <td>${item.trangThai}</td>
+                        <td>${item.diaChiNhan}</td>
                         <td>
                             <a href="AdminOldDeviceServlet?action=edit&id=${item.maTMC}" class="btn">Sửa</a>
                             <a href="AdminOldDeviceServlet?action=delete&id=${item.maTMC}" onclick="return confirm('Xóa máy này?')" class="btn btn-danger">Xóa</a>

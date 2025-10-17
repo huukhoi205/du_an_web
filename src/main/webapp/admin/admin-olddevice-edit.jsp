@@ -65,7 +65,14 @@
                 <input type="text" name="giaThoaThuan" value="<%= item.getGiaThoaThuan() %>" />
 
                 <label>Trạng thái:</label>
-                <input type="text" name="trangThai" value="<%= item.getTrangThai() %>" />
+                <select name="trangThai" required>
+                    <option value="TiepNhan" <%= item.getTrangThai().equals("TiepNhan") ? "selected" : "" %>>Tiếp nhận</option>
+                    <option value="HoanTat" <%= item.getTrangThai().equals("HoanTat") ? "selected" : "" %>>Hoàn tất</option>
+                    <option value="Huy" <%= item.getTrangThai().equals("Huy") ? "selected" : "" %>>Hủy</option>
+                </select>
+
+                <label>Địa chỉ nhận:</label>
+                <input type="text" name="diaChiNhan" value="<%= item.getDiaChiNhan() != null ? item.getDiaChiNhan() : "" %>" />
 
                 <div class="btn-group">
                     <button type="submit" class="btn">Cập nhật</button>

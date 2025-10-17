@@ -52,14 +52,19 @@
 
                 <label>Giá thỏa thuận:</label>
                 <input type="text" name="giaThoaThuan" />
+
                 <div class="form-group">
                     <label>Trạng thái: <span class="required">*</span></label>
                     <select name="trangThai" required>
-                        <option value="TiepNhan" ${trangThai == 'TiepNhan' ? 'selected' : ''}>Tiếp nhận</option>
-                        <option value="HoanTat" ${trangThai == 'HoanTat' ? 'selected' : ''}>Hoàn tất</option>
-                        <option value="Huy" ${trangThai == 'Huy' ? 'selected' : ''}>Hủy</option>
+                        <option value="TiepNhan">Tiếp nhận</option>
+                        <option value="HoanTat">Hoàn tất</option>
+                        <option value="Huy">Hủy</option>
                     </select>
                 </div>
+
+                <label>Địa chỉ nhận:</label>
+                <input type="text" name="diaChiNhan" />
+
                 <div class="btn-group">
                     <button type="submit" class="btn">Lưu</button>
                     <a href="AdminOldDeviceServlet" class="btn btn-secondary">Hủy</a>
