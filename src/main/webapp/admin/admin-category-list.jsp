@@ -6,7 +6,7 @@
     <title>Danh sách danh mục</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-base.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-components.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-pages.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-category.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-responsive.css">
 </head>
 <body>
@@ -36,6 +36,9 @@
 
         <!-- Main Content -->
         <div class="main-content">
+            <div class="breadcrumb">
+                Trang chủ / anh mục
+            </div>
             <div class="admin-container">
                 <h1>Danh sách danh mục</h1>
                 <div class="toolbar">

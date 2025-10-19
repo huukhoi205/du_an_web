@@ -6,7 +6,7 @@
     <title>Sửa khách hàng</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-base.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-components.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-pages.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-customer.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-responsive.css">
 </head>
 <body>
@@ -37,6 +37,8 @@
 
         <!-- Main Content -->
         <div class="main-content">
+            <div class="breadcrumb">
+                Trang chủ / Khách hàng / Sửa khách hàng</div>
             <div class="admin-container">
                 <h1>Sửa khách hàng</h1>
                 <form action="${pageContext.request.contextPath}/admin/customer/edit" method="post">

@@ -1,0 +1,263 @@
+/* Reset và Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+/* Layout */
+.admin-layout {
+    display: flex;
+    min-height: calc(100vh - 64px);
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: 20px;
+    background: #f8f9fa;
+}
+
+.admin-container {
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+h1 {
+    color: #2c3e50;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.breadcrumb {
+    color: #7f8c8d;
+    font-size: 13px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+/* Toolbar */
+.toolbar {
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.btn-primary {
+    background: #3498db;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #2980b9;
+}
+
+/* Table */
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: white;
+    font-size: 13px;
+    border: 1px solid #dee2e6;
+}
+
+.order-table thead {
+    background: #f8f9fa;
+}
+
+.order-table th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #2c3e50;
+    border-bottom: 2px solid #dee2e6;
+    font-size: 13px;
+}
+
+.order-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 13px;
+}
+
+.order-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.status-shipping {
+    background: #cce7ff;
+    color: #004085;
+    border: 1px solid #b3d7ff;
+}
+
+.status-delivered {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.status-cancelled {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Order Processing Buttons */
+.order-processing {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.process-btn {
+    display: inline-block;
+    padding: 4px 8px;
+    background: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    transition: background 0.2s ease;
+}
+
+.process-btn:hover {
+    background: #218838;
+}
+
+/* View Detail Link */
+.view-detail {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.view-detail:hover {
+    text-decoration: underline;
+}
+
+/* Phone Number */
+.phone-number {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #495057;
+}
+
+/* Price */
+.price {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 13px;
+}
+
+.no-action {
+    color: #6c757d;
+    font-style: italic;
+    font-size: 13px;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+    gap: 5px;
+}
+
+.page-link {
+    padding: 6px 12px;
+    border: 1px solid #dee2e6;
+    border-radius: 3px;
+    text-decoration: none;
+    color: #3498db;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    background: white;
+}
+
+.page-link:hover {
+    background: #e9ecef;
+    border-color: #adb5bd;
+}
+
+.page-link.current {
+    background: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+/* Error Message */
+.error-message {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 10px 15px;
+    border-radius: 3px;
+    margin: 10px 25px;
+    border: 1px solid #f5c6cb;
+    font-size: 13px;
+}
+
+/* Form Styles */
+form {
+    display: inline-block;
+    margin: 0;
+}
+
+/* Responsive for main content */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 15px;
+    }
+    
+    .order-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .pagination {
+        flex-wrap: wrap;
+    }
+}

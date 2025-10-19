@@ -37,6 +37,9 @@
 
     <!-- Main Content -->
     <div class="main-content">
+        <div class="breadcrumb">
+                Trang chủ / Thu máy cũ
+        </div>
         <div class="admin-container">
             <h1>Danh sách máy cũ thu mua</h1>
             <div class="toolbar">

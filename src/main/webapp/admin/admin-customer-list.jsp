@@ -6,8 +6,9 @@
     <title>Danh sách khách hàng</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-base.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-components.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-pages.css">
+	
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-responsive.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-customer.css">
 </head>
 <body>
     <!-- Header -->
@@ -36,6 +37,9 @@
 
         <!-- Main Content -->
         <div class="main-content">
+        	<div class="breadcrumb">
+                Trang chủ / Khách hàng
+            </div>
             <div class="admin-container">
                 <h1>Danh sách khách hàng</h1>
                 <div class="toolbar">
@@ -66,6 +70,7 @@
                             <td>${c.vaiTro}</td>
                             <td>${c.trangThai ? 'Hoạt động' : 'Khóa'}</td>
                             <td>
+                            	<a href="${pageContext.request.contextPath}/admin/customer/view?maND=${c.maND}" class="btn">xem</a>
                                 <a href="${pageContext.request.contextPath}/admin/customer/edit?maND=${c.maND}" class="btn">Sửa</a>
                                 <a href="${pageContext.request.contextPath}/admin/customer/delete?maND=${c.maND}" onclick="return confirm('Xóa khách hàng này?')" class="btn btn-danger">Xóa</a>
                             </td>

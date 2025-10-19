@@ -32,6 +32,9 @@
 
     <div class="main-content">
         <div class="admin-container">
+        <div class="breadcrumb">
+                Trang chủ / Sửa chữa
+        </div>        	
             <%
             RepairSchedule item = (RepairSchedule) request.getAttribute("item");
             if (item == null) {

@@ -31,6 +31,8 @@
     </div>
 
     <div class="main-content">
+        <div class="breadcrumb">
+                Trang chủ / Thu máy cũ / Chỉnh sửa	
         <div class="admin-container">
             <%
             OldDevice item = (OldDevice) request.getAttribute("item");

@@ -6,6 +6,9 @@ public class OrderDetail {
     private int soLuong;
     private double gia;
 
+    // Field mới cho tên sản phẩm
+    private String tenSanPham;
+
     public OrderDetail(int maDH, int maSP, int soLuong, double gia) {
         this.maDH = maDH;
         this.maSP = maSP;
@@ -22,4 +25,8 @@ public class OrderDetail {
     public void setSoLuong(int soLuong) { this.soLuong = soLuong; }
     public double getGia() { return gia; }
     public void setGia(double gia) { this.gia = gia; }
+
+    // Getter/Setter mới
+    public String getTenSanPham() { return tenSanPham; }
+    public void setTenSanPham(String tenSanPham) { this.tenSanPham = tenSanPham; }
 }

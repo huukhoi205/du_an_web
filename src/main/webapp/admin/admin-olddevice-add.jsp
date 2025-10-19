@@ -30,6 +30,8 @@
     </div>
 
     <div class="main-content">
+        <div class="breadcrumb">
+            Trang chủ / Thu máy cũ / Thêm máy cũ
         <div class="admin-container">
             <h1>Thêm máy cũ</h1>
             <form action="AdminOldDeviceServlet" method="post">

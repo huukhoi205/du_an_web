@@ -3,6 +3,7 @@ package controller.admin;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,11 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.admin.Order;
+import model.admin.OrderDetail;
 import service.admin.OrderService;
+import dao.admin.UserDAO; // Thêm import
 
 @WebServlet(name = "AdminOrderServlet", urlPatterns = "/admin/order/*")
 public class AdminOrderServlet extends HttpServlet {
     private OrderService orderService = new OrderService();
+    private UserDAO userDAO = new UserDAO(); // Thêm instance
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -31,6 +35,9 @@ public class AdminOrderServlet extends HttpServlet {
                 break;
             case "/delete":
                 deleteOrder(request, response);
+                break;
+            case "/detail":
+                showOrderDetail(request, response);
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -60,8 +67,22 @@ public class AdminOrderServlet extends HttpServlet {
 
     private void listOrders(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        request.setAttribute("orders", orderService.getAllOrders());
-        request.getRequestDispatcher("/admin/admin-order-list.jsp").forward(request, response);
+        try {
+            List<Order> orders = orderService.getAllOrders();
+            for (Order order : orders) {
+                // Lấy thông tin khách hàng từ maND
+                UserDAO.User user = userDAO.findById(order.getMaND());
+                if (user != null) {
+                    order.setTenKhachHang(user.getHoTen());
+                    order.setDienThoai(user.getSoDT());
+                }
+            }
+            request.setAttribute("orders", orders);
+            request.getRequestDispatcher("/admin/admin-order-list.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/admin/order/list?error=serverError");
+        }
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) 
@@ -104,7 +125,6 @@ public class AdminOrderServlet extends HttpServlet {
             String trangThai = request.getParameter("trangThai");
             String tongTienParam = request.getParameter("tongTien");
 
-            // Validate inputs
             if (maNDParam == null || maNDParam.trim().isEmpty()) {
                 error = "invalidMaND";
             } else if (trangThai == null || trangThai.trim().isEmpty()) {
@@ -118,7 +138,6 @@ public class AdminOrderServlet extends HttpServlet {
                 if (tongTien.compareTo(BigDecimal.ZERO) < 0) {
                     error = "negativeTongTien";
                 } else {
-                    // Kiểm tra trạng thái có hợp lệ không (phải khớp với ENUM trong database)
                     String[] validStatuses = {"ChoXacNhan", "DaThanhToan", "DangGiao", "HoanTat", "Huy"};
                     boolean isValidStatus = false;
                     for (String status : validStatuses) {
@@ -131,18 +150,13 @@ public class AdminOrderServlet extends HttpServlet {
                     if (!isValidStatus) {
                         error = "invalidTrangThai";
                     } else {
-                        System.out.println("AdminOrderServlet: Thử thêm order - maND=" + maND + 
-                                         ", trangThai=" + trangThai + ", tongTien=" + tongTien);
-                        
                         java.sql.Timestamp ngayDat = new java.sql.Timestamp(System.currentTimeMillis());
                         Order order = new Order(0, maND, trangThai, tongTien, ngayDat);
                         
                         boolean inserted = orderService.addOrder(order);
                         if (!inserted) {
                             error = "insertFailed-MaND=" + maND + " - Kiểm tra mã khách hàng có tồn tại không";
-                            System.err.println("AdminOrderServlet: Không thể thêm order, có thể do MaND=" + maND + " không tồn tại");
                         } else {
-                            System.out.println("AdminOrderServlet: Thêm order thành công, maDH=" + order.getMaDH());
                             response.sendRedirect(request.getContextPath() + "/admin/order/list?success=added");
                             return;
                         }
@@ -155,11 +169,9 @@ public class AdminOrderServlet extends HttpServlet {
             }
             
         } catch (NumberFormatException e) {
-            System.err.println("AdminOrderServlet: NumberFormatException: " + e.getMessage());
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/admin/order/add?error=invalidInput");
         } catch (Exception e) {
-            System.err.println("AdminOrderServlet: Exception khi addOrder: " + e.getMessage());
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/admin/order/add?error=serverError");
         }
@@ -191,6 +203,38 @@ public class AdminOrderServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/admin/order/list?error=delete");
+        }
+    }
+
+    private void showOrderDetail(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        try {
+            String maDHParam = request.getParameter("maDH");
+            if (maDHParam == null || maDHParam.trim().isEmpty()) {
+                response.sendRedirect(request.getContextPath() + "/admin/order/list?error=invalidMaDH");
+                return;
+            }
+
+            int maDH = Integer.parseInt(maDHParam);
+            Order order = orderService.getOrderByIdWithCustomer(maDH);
+            if (order == null) {
+                response.sendRedirect(request.getContextPath() + "/admin/order/list?error=orderNotFound");
+                return;
+            }
+
+            List<OrderDetail> orderDetails = orderService.getOrderDetails(maDH);
+            BigDecimal totalAmount = orderService.calculateTotal(maDH);
+
+            request.setAttribute("order", order);
+            request.setAttribute("orderDetails", orderDetails);
+            request.setAttribute("totalAmount", totalAmount);
+            request.getRequestDispatcher("/admin/admin-order-details.jsp").forward(request, response);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/admin/order/list?error=invalidMaDH");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/admin/order/list?error=serverError");
         }
     }
 }

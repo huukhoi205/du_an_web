@@ -39,6 +39,11 @@ public class AdminCustomerServlet extends HttpServlet {
                     request.setAttribute("customer", customerService.getCustomerById(maND));
                     request.getRequestDispatcher("/admin/admin-customer-edit.jsp").forward(request, response);
                     break;
+                case "/view": // THÊM CASE NÀY
+                    int viewMaND = Integer.parseInt(request.getParameter("maND"));
+                    request.setAttribute("customer", customerService.getCustomerById(viewMaND));
+                    request.getRequestDispatcher("/admin/admin-customer-view.jsp").forward(request, response);
+                    break;
                 case "/delete":
                     deleteCustomer(request, response);
                     break;

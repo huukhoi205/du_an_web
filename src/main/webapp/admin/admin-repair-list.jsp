@@ -37,6 +37,9 @@
 
     <!-- Main Content -->
     <div class="main-content">
+        <div class="breadcrumb">
+                Trang chủ / Sửa chữa
+        </div>
         <div class="admin-container">
             <h1>Danh sách lịch sửa chữa</h1>
             <div class="toolbar">
