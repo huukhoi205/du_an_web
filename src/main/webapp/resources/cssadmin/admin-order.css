@@ -1,3 +1,4 @@
+
 /* Reset và Base Styles */
 * {
     margin: 0;
@@ -38,14 +39,6 @@ h1 {
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 5px;
-}
-
-.breadcrumb {
-    color: #7f8c8d;
-    font-size: 13px;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #ecf0f1;
 }
 
 /* Toolbar */

@@ -34,7 +34,6 @@
             <a href="${pageContext.request.contextPath}/AdminRepairScheduleServlet" class="menu-item active"><span>🛠️</span>Lịch sửa chữa</a>
         </nav>
     </div>
-
     <!-- Main Content -->
     <div class="main-content">
         <div class="breadcrumb">

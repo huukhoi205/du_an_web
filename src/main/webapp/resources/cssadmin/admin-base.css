@@ -1,3 +1,4 @@
+
 /* ============================================ */
 /* CSS VARIABLES */
 /* ============================================ */
@@ -185,6 +186,44 @@ body {
 }
 
 /* ============================================ */
+/* BREADCRUMB - CHUẨN HÓA */
+/* ============================================ */
+.breadcrumb {
+  background: var(--breadcrumb-bg);
+  color: white;
+  padding: 15px 25px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+}
+
+.breadcrumb a {
+  color: white;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.breadcrumb a:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.breadcrumb .separator {
+  margin: 0 10px;
+  opacity: 0.7;
+}
+
+.breadcrumb .current {
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+/* ============================================ */
 /* CONTENT AREA STYLES */
 /* ============================================ */
 #content-area {
@@ -237,6 +276,18 @@ body {
   .menu-toggle {
     display: block;
   }
+
+  /* Responsive Breadcrumb */
+  .breadcrumb {
+    padding: 12px 15px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+  }
+  
+  .breadcrumb .separator {
+    margin: 0 8px;
+  }
 }
 
 /* Mobile Specific */
@@ -269,6 +320,18 @@ body {
   
   .admin-container h1 {
     font-size: 24px;
+  }
+
+  /* Mobile Breadcrumb */
+  .breadcrumb {
+    padding: 10px 12px;
+    font-size: 13px;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  
+  .breadcrumb .separator {
+    margin: 0 5px;
   }
 }
 
