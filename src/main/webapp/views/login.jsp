@@ -1,77 +1,53 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+    String error = (String) request.getAttribute("error");
+    String email = (String) request.getAttribute("email");
+    if (email == null) email = "";
+%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Nhập - KT Store</title>
-    <link rel="stylesheet" href="../resources/css/login.css">
+    <title>Đăng nhập - KT Store</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="login-container">
-        <!-- Left Side - Illustration -->
-        <div class="login-left">
-            <div class="illustration-container">
-                <!-- Phone Illustration -->
-                <div class="phone-illustration">
-                    <div class="phone-frame">
-                        <div class="phone-screen">
-                            <div class="chat-bubble green"></div>
-                            <div class="chat-bubble orange"></div>
-                            <div class="chat-bubble green small"></div>
-                            <div class="chat-bubble orange small"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Character Illustration -->
-                <div class="character">
-                    <div class="character-head">
-                        <div class="glasses"></div>
-                    </div>
-                    <div class="character-body"></div>
-                    <div class="character-legs"></div>
-                    <div class="character-phone"></div>
-                </div>
+    <div class="login-page">
+        <div class="left-side">
+            <div class="illustration-wrapper">
+                <img src="${pageContext.request.contextPath}/image/49668abf44a0f8d56f5221eec31f5edcc6766e6e.jpg" alt="KT Store Illustration" class="illustration">
             </div>
-            
-            <!-- Brand and Text -->
-            <div class="brand-section">
-                <h1 class="brand-name">KT Store</h1>
-                <p class="brand-tagline">Ở đây chúng tôi có mọi máy mà bạn cần</p>
-            </div>
-            
-            <!-- Back to Home -->
-            <div class="back-home">
-                <a href="index.jsp">
-                    <span class="back-icon">←</span>
-                    <span>Trang chủ</span>
-                </a>
-            </div>
+            <h2 class="welcome-text">Chào mừng bạn<br>quay trở lại</h2>
+            <a href="${pageContext.request.contextPath}/views/index.jsp" class="back-home">
+                <span class="arrow">←</span> Trang chủ
+            </a>
         </div>
         
-        <!-- Right Side - Login Form -->
-        <div class="login-right">
-            <div class="login-form-container">
-                <form class="login-form" method="post" action="processLogin.jsp">
-                    <div class="input-group">
-                        <input type="email" name="email" placeholder="Email" required>
+        <div class="right-side">
+            <div class="form-wrapper">
+                <% if (error != null && !error.isEmpty()) { %>
+                    <div class="alert alert-error"><%= error %></div>
+                <% } %>
+                
+                <form method="post" action="${pageContext.request.contextPath}/login" class="login-form">
+                    <input type="hidden" name="redirect" value="<%= request.getParameter("redirect") != null ? request.getParameter("redirect") : "" %>">
+                    <div class="form-group">
+                        <input type="text" name="email" placeholder="Email hoặc Tên đăng nhập" required value="<%= email %>">
                     </div>
                     
-                    <div class="input-group">
+                    <div class="form-group">
                         <input type="password" name="password" placeholder="Mật khẩu" required>
                     </div>
                     
-                    <button type="submit" class="login-btn">Đăng nhập</button>
-                    
-                    <div class="login-links">
-                        <a href="forgot-password.jsp" class="forgot-link">Bạn quên mật khẩu ?</a>
-                        <p class="signup-text">
-                            Bạn chưa có mật khẩu? 
-                            <a href="register.jsp" class="signup-link">Đăng ký</a>
-                        </p>
-                    </div>
+                    <button type="submit" class="btn-login">Đăng nhập</button>
                 </form>
+                
+                <div class="form-footer">
+                    <p class="link-register">Chưa có tài khoản? <a href="${pageContext.request.contextPath}/views/register.jsp">Đăng ký</a></p>
+                    <p class="forgot-password"><a href="${pageContext.request.contextPath}/views/forgot-password.jsp">Bạn quên mật khẩu?</a></p>
+                </div>
             </div>
         </div>
     </div>

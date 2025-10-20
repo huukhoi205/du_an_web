@@ -6,6 +6,10 @@ import java.sql.Timestamp;
 public class Order {
     private int maDH;
     private int maND;
+    private String tenNguoiNhan;
+    private String soDienThoai;
+    private String diaChiGiao;
+    private String phuongThucThanhToan;
     private String trangThai;
     private BigDecimal tongTien;
     private Timestamp ngayDat;
@@ -31,6 +35,18 @@ public class Order {
 
     public BigDecimal getTongTien() { return tongTien; }
     public void setTongTien(BigDecimal tongTien) { this.tongTien = tongTien; }
+
+    public String getTenNguoiNhan() { return tenNguoiNhan; }
+    public void setTenNguoiNhan(String tenNguoiNhan) { this.tenNguoiNhan = tenNguoiNhan; }
+
+    public String getSoDienThoai() { return soDienThoai; }
+    public void setSoDienThoai(String soDienThoai) { this.soDienThoai = soDienThoai; }
+
+    public String getDiaChiGiao() { return diaChiGiao; }
+    public void setDiaChiGiao(String diaChiGiao) { this.diaChiGiao = diaChiGiao; }
+
+    public String getPhuongThucThanhToan() { return phuongThucThanhToan; }
+    public void setPhuongThucThanhToan(String phuongThucThanhToan) { this.phuongThucThanhToan = phuongThucThanhToan; }
 
     public Timestamp getNgayDat() { return ngayDat; }
     public void setNgayDat(Timestamp ngayDat) { this.ngayDat = ngayDat; }

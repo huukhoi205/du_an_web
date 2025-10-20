@@ -1,140 +1,286 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+/* Order Page Specific Styles */
+
+/* Main Content */
+.main-content {
+    background: #fff;
+    padding: 40px 0;
+    min-height: calc(100vh - 200px);
 }
 
-header {
+/* Order Container */
+.order-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Page Title */
+.page-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #8B6F5E;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* Order Content */
+.order-content {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 40px;
+    align-items: start;
+}
+
+/* Order Form Section */
+.order-form-section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    border: 1px solid #E0D0C0;
+}
+
+.order-form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Form Group */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input {
+    padding: 15px 20px;
+    border: 1px solid #E0D0C0;
+    border-radius: 8px;
+    font-size: 15px;
+    background: #fff;
+    color: #333;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #8B6F5E;
+}
+
+/* Payment Methods */
+.payment-methods {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.payment-btn {
+    padding: 12px 20px;
+    border: 1px solid #E0D0C0;
+    background: #fff;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex: 1;
+    min-width: 120px;
+}
+
+.payment-btn:hover {
+    border-color: #8B6F5E;
+    color: #8B6F5E;
+}
+
+.payment-btn.active {
+    background: #8B6F5E;
+    color: #fff;
+    border-color: #8B6F5E;
+}
+
+/* Order Summary Section */
+.order-summary-section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    border: 1px solid #E0D0C0;
+    position: sticky;
+    top: 20px;
+}
+
+.summary-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #E0D0C0;
 }
 
-.logo {
-    font-size: 24px;
-    font-weight: bold;
+.summary-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
 }
 
-.search-bar {
-    padding: 5px;
-    width: 200px;
-}
-
-.icons a {
-    color: white;
-    margin-left: 15px;
+.edit-link {
+    color: #2196F3;
     text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
 }
 
-nav {
-    background-color: #444;
-    padding: 10px;
+.edit-link:hover {
+    text-decoration: underline;
 }
 
-nav a {
-    color: white;
-    margin: 0 15px;
-    text-decoration: none;
+/* Order Items */
+.order-items {
+    margin-bottom: 25px;
 }
 
-nav a:hover {
-    color: #ddd;
-}
-
-.order-content {
-    padding: 20px;
-    text-align: center;
-}
-
-.order-content h2 {
-    font-size: 28px;
-    margin-bottom: 20px;
-}
-
-.order-content form {
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-.order-content input {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.order-summary {
-    background-color: #fff;
-    padding: 15px;
-    margin: 20px 0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    text-align: left;
-}
-
-.order-summary h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
-.order-summary p {
-    color: #666;
-    margin-bottom: 5px;
-}
-
-.order-content button {
-    padding: 10px 20px;
-    margin: 5px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.order-content button:hover {
-    background-color: #218838;
-}
-
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    margin-top: 20px;
-}
-
-.footer-content {
+.order-item {
     display: flex;
-    justify-content: space-around;
-    max-width: 1200px;
-    margin: 0 auto;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
 }
 
-.footer-section {
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.item-quantity {
+    font-size: 14px;
+    color: #666;
+    margin-right: 10px;
+}
+
+.item-name {
+    font-size: 14px;
+    color: #333;
     flex: 1;
 }
 
-.footer-section h3 {
-    margin-bottom: 10px;
+.item-price {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
 }
 
-.footer-section a {
-    color: #ddd;
-    text-decoration: none;
+/* Total Section */
+.total-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px 0;
+    border-top: 2px solid #E0D0C0;
+    border-bottom: 1px solid #E0D0C0;
 }
 
-.footer-section a:hover {
-    color: white;
+.total-label {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
 }
 
-@media (max-width: 600px) {
-    .footer-content {
+.total-amount {
+    font-size: 24px;
+    font-weight: 700;
+    color: #e53935;
+}
+
+/* Pay Button */
+.btn-pay {
+    width: 100%;
+    padding: 15px;
+    background: #A08060;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-pay:hover {
+    background: #8B6F5E;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(160, 128, 96, 0.3);
+}
+
+.btn-pay:active {
+    transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .order-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .order-summary-section {
+        position: static;
+    }
+    
+    .order-form-section {
+        padding: 30px;
+    }
+    
+    .payment-methods {
         flex-direction: column;
     }
-    .footer-section {
-        margin-bottom: 20px;
+    
+    .payment-btn {
+        min-width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .order-container {
+        padding: 0 15px;
+    }
+    
+    .page-title {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+    
+    .order-form-section,
+    .order-summary-section {
+        padding: 20px;
+    }
+    
+    .form-group input {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+    
+    .payment-btn {
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+    
+    .total-amount {
+        font-size: 20px;
+    }
+    
+    .btn-pay {
+        padding: 12px;
+        font-size: 16px;
     }
 }

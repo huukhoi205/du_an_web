@@ -5,6 +5,18 @@
          version="4.0">
     <display-name>KT Store Web</display-name>
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>views/index.jsp</welcome-file>
     </welcome-file-list>
+    
+    <!-- Servlet Mappings -->
+    <servlet>
+        <servlet-name>OrderServlet</servlet-name>
+        <servlet-class>controller.OrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderServlet</servlet-name>
+        <url-pattern>/OrderServlet</url-pattern>
+    </servlet-mapping>
+    
+    
 </web-app>

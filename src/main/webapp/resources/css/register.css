@@ -1,0 +1,253 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.register-page {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+/* Left Side */
+.left-side {
+    flex: 1;
+    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 60px 40px;
+}
+
+.illustration-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.illustration-wrapper::before {
+    content: '';
+    position: absolute;
+    width: 480px;
+    height: 480px;
+    background: rgba(187, 222, 251, 0.6);
+    border-radius: 50%;
+    z-index: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.illustration {
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.welcome-text {
+    font-size: 32px;
+    font-weight: 600;
+    color: #2C3E50;
+    line-height: 1.4;
+    text-align: center;
+    margin-top: 0;
+}
+
+.back-home {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #2C3E50;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.back-home:hover {
+    color: #1976D2;
+    transform: translateX(-5px);
+}
+
+.arrow {
+    font-size: 24px;
+}
+
+/* Right Side */
+.right-side {
+    flex: 1;
+    background: linear-gradient(135deg, #80DEEA 0%, #4DD0E1 20%, #26C6DA 40%, #9FA8DA 60%, #B39DDB 80%, #CE93D8 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    overflow-y: auto;
+}
+
+.form-wrapper {
+    background: white;
+    padding: 40px 50px;
+    border-radius: 30px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+.form-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2C3E50;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.alert {
+    padding: 12px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.alert-success {
+    background: #D4EDDA;
+    color: #155724;
+    border: 1px solid #C3E6CB;
+}
+
+.alert-error {
+    background: #F8D7DA;
+    color: #721C24;
+    border: 1px solid #F5C6CB;
+}
+
+.register-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 15px;
+    border: 2px solid #E0E0E0;
+    border-radius: 15px;
+    outline: none;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-group input::placeholder {
+    color: #9E9E9E;
+}
+
+.form-group input:focus {
+    border-color: #9C27B0;
+    box-shadow: 0 0 0 3px rgba(156, 39, 176, 0.1);
+}
+
+.btn-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn {
+    flex: 1;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-back {
+    background: white;
+    color: #FF6F00;
+    border: 2px solid #FF6F00;
+}
+
+.btn-back:hover {
+    background: #FF6F00;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-register {
+    background: #FF9800;
+    color: white;
+    border: none;
+}
+
+.btn-register:hover {
+    background: #F57C00;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .register-page {
+        flex-direction: column;
+    }
+    
+    .left-side {
+        min-height: 35vh;
+        padding: 30px 20px;
+    }
+    
+    .illustration-wrapper::before {
+        width: 320px;
+        height: 320px;
+    }
+    
+    .illustration {
+        max-width: 300px;
+    }
+    
+    .welcome-text {
+        font-size: 20px;
+    }
+    
+    .right-side {
+        min-height: 65vh;
+    }
+    
+    .form-wrapper {
+        padding: 30px;
+    }
+    
+    .form-title {
+        font-size: 24px;
+    }
+    
+    .back-home {
+        bottom: 20px;
+        left: 20px;
+        font-size: 14px;
+    }
+}

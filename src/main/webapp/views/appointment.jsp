@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đặt Lịch Hẹn Bảo Hành và Sửa Chữa - KT Store</title>
-    <link rel="stylesheet" href="../resources/css/appointment.css">
+    <title>Äáº·t Lá»‹ch Háº¹n Báº£o HÃ nh vÃ  Sá»­a Chá»¯a - KT Store</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/appointment.css">
 </head>
 <body>
     <!-- Header -->
@@ -13,12 +13,12 @@
         <div class="header-top">
             <div class="logo">KT</div>
             <div class="search-container">
-                <input type="text" class="search-bar" placeholder="Tìm Kiếm Sản phẩm">
+                <input type="text" class="search-bar" placeholder="TÃ¬m Kiáº¿m Sáº£n pháº©m">
             </div>
             <div class="header-icons">
-                <a href="cart.jsp">🛒</a>
-                <a href="wishlist.jsp">❤️</a>
-                <a href="login.jsp">ĐĂNG NHẬP</a>
+                <a href="cart.jsp">ðŸ›’</a>
+                <a href="wishlist.jsp">â¤ï¸</a>
+                <a href="login.jsp">ÄÄ‚NG NHáº¬P</a>
             </div>
         </div>
     </header>
@@ -27,13 +27,13 @@
     <nav class="navigation">
         <div class="nav-container">
             <button class="menu-toggle">
-                ☰ DANH<br>MỤC
+                â˜° DANH<br>Má»¤C
             </button>
             <ul class="nav-links">
-                <li><a href="new-phones.jsp">ĐIỆN THOẠI MỚI ▼</a></li>
-                <li><a href="used-phones.jsp">ĐIỆN THOẠI CŨ ▼</a></li>
-                <li><a href="repair.jsp">THU ĐIỆN THOẠI</a></li>
-                <li><a href="appointment.jsp">SỬA CHỮA</a></li>
+                <li><a href="new-phones.jsp">ÄIá»†N THOáº I Má»šI â–¼</a></li>
+                <li><a href="used-phones.jsp">ÄIá»†N THOáº I CÅ¨ â–¼</a></li>
+                <li><a href="repair.jsp">THU ÄIá»†N THOáº I</a></li>
+                <li><a href="appointment.jsp">Sá»¬A CHá»®A</a></li>
             </ul>
         </div>
     </nav>
@@ -41,17 +41,17 @@
     <!-- Main Content -->
     <main class="main-content">
         <section class="appointment-section">
-            <h2 class="section-title">ĐẶT LỊCH HẸN BẢO HÀNH VÀ SỬA CHỮA</h2>
-            <p class="section-subtitle">(Nhận voucher 10% tối đa 50.000 sau khi đặt lịch)</p>
+            <h2 class="section-title">Äáº¶T Lá»ŠCH Háº¸N Báº¢O HÃ€NH VÃ€ Sá»¬A CHá»®A</h2>
+            <p class="section-subtitle">(Nháº­n voucher 10% tá»‘i Ä‘a 50.000 sau khi Ä‘áº·t lá»‹ch)</p>
             
             <form method="post" action="processAppointment.jsp">
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="form-label">Họ và tên <span class="required">*</span></label>
+                        <label class="form-label">Há» vÃ  tÃªn <span class="required">*</span></label>
                         <input type="text" name="fullName" class="form-input" placeholder="Nguyen Van A" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Số điện thoại <span class="required">*</span></label>
+                        <label class="form-label">Sá»‘ Ä‘iá»‡n thoáº¡i <span class="required">*</span></label>
                         <input type="tel" name="phone" class="form-input" placeholder="0903.xxx.xxx" required>
                     </div>
                 </div>
@@ -59,30 +59,30 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-input" placeholder="Email (không bắt buộc)">
+                        <input type="email" name="email" class="form-input" placeholder="Email (khÃ´ng báº¯t buá»™c)">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Dòng máy cần sửa chữa <span class="required">*</span></label>
-                        <input type="text" name="deviceModel" class="form-input" placeholder="Dòng máy (VD: iPhone 11 Pro Max, ...)" required>
+                        <label class="form-label">DÃ²ng mÃ¡y cáº§n sá»­a chá»¯a <span class="required">*</span></label>
+                        <input type="text" name="deviceModel" class="form-input" placeholder="DÃ²ng mÃ¡y (VD: iPhone 11 Pro Max, ...)" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group full-width">
-                        <label class="form-label">Chọn khu vực <span class="required">*</span></label>
+                        <label class="form-label">Chá»n khu vá»±c <span class="required">*</span></label>
                         <select name="region" class="form-input" required>
-                            <option value="">Chọn khu vực</option>
-                            <option value="mien-bac">Miền Bắc</option>
-                            <option value="mien-trung">Miền Trung</option>
-                            <option value="mien-nam">Miền Nam</option>
+                            <option value="">Chá»n khu vá»±c</option>
+                            <option value="mien-bac">Miá»n Báº¯c</option>
+                            <option value="mien-trung">Miá»n Trung</option>
+                            <option value="mien-nam">Miá»n Nam</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group full-width">
-                        <label class="form-label">Mô tả lỗi <span class="required">*</span></label>
-                        <textarea name="issueDescription" class="form-textarea" placeholder="Mô tả lỗi (Bắt buộc)" required></textarea>
+                        <label class="form-label">MÃ´ táº£ lá»—i <span class="required">*</span></label>
+                        <textarea name="issueDescription" class="form-textarea" placeholder="MÃ´ táº£ lá»—i (Báº¯t buá»™c)" required></textarea>
                     </div>
                 </div>
 
@@ -93,7 +93,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="submit-btn">TIẾP TỤC</button>
+                <button type="submit" class="submit-btn">TIáº¾P Tá»¤C</button>
             </form>
         </section>
     </main>
@@ -103,26 +103,26 @@
         <div class="footer-content">
             <div class="footer-section">
                 <div class="footer-logo">KT</div>
-                <p>GIỚI THIỆU VỀ CÔNG TY<br>
-                CÂU HỎI THƯỜNG GẶP<br>
-                CHÍNH SÁCH BẢO MẬT<br>
-                QUY CHẾ HOẠT ĐỘNG</p>
+                <p>GIá»šI THIá»†U Vá»€ CÃ”NG TY<br>
+                CÃ‚U Há»ŽI THÆ¯á»œNG Gáº¶P<br>
+                CHÃNH SÃCH Báº¢O Máº¬T<br>
+                QUY CHáº¾ HOáº T Äá»˜NG</p>
             </div>
             
             <div class="footer-section">
-                <h3>KIỂM TRA HÓA ĐƠN ĐIỆN TỬ</h3>
-                <a href="#">TRA CỨU THÔNG TIN BẢO HÀNH</a>
-                <a href="#">TIN TUYỂN DỤNG</a>
-                <a href="#">TIN KHUYẾN MÃI</a>
-                <a href="#">HƯỚNG DẪN ONLINE</a>
+                <h3>KIá»‚M TRA HÃ“A ÄÆ N ÄIá»†N Tá»¬</h3>
+                <a href="#">TRA Cá»¨U THÃ”NG TIN Báº¢O HÃ€NH</a>
+                <a href="#">TIN TUYá»‚N Dá»¤NG</a>
+                <a href="#">TIN KHUYáº¾N MÃƒI</a>
+                <a href="#">HÆ¯á»šNG DáºªN ONLINE</a>
             </div>
             
             <div class="footer-section">
-                <h3>HỆ THỐNG CỬA HÀNG</h3>
-                <a href="#">HỆ THỐNG BẢO HÀNH</a>
-                <a href="#">KIỂM TRA HÀNG APPLE CHÍNH HÃNG</a>
-                <a href="#">GIỚI THIỆU ĐỔI MÁY</a>
-                <a href="#">CHÍNH SÁCH ĐỔI TRẢ</a>
+                <h3>Há»† THá»NG Cá»¬A HÃ€NG</h3>
+                <a href="#">Há»† THá»NG Báº¢O HÃ€NH</a>
+                <a href="#">KIá»‚M TRA HÃ€NG APPLE CHÃNH HÃƒNG</a>
+                <a href="#">GIá»šI THIá»†U Äá»”I MÃY</a>
+                <a href="#">CHÃNH SÃCH Äá»”I TRáº¢</a>
             </div>
             
             <div class="footer-section social-media">
@@ -135,6 +135,6 @@
         </div>
     </footer>
     
-    <script src="../resources/js/script.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/script.js"></script>
 </body>
 </html>
