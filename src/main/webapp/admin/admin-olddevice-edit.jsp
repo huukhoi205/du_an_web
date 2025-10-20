@@ -32,7 +32,7 @@
 
     <div class="main-content">
         <div class="breadcrumb">
-                Trang chủ / Thu máy cũ / Chỉnh sửa	
+                Trang chủ / Thu máy cũ / Chỉnh sửa	</div>>
         <div class="admin-container">
             <%
             OldDevice item = (OldDevice) request.getAttribute("item");

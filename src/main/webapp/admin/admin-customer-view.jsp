@@ -38,7 +38,7 @@
         <!-- Main Content -->
         <div class="main-content">
             <div class="breadcrumb">
-                Trang chủ / Khách hàng / Chi tiết khách hàng
+                Trang chủ / Khách hàng / Chi tiết khách hàng</div>
             <div class="admin-container">
                 
                 <h1>Chi tiết khách hàng</h1>
