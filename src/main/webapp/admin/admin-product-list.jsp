@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-base.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-components.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-responsive.css">
+    
     <!-- CSS Riêng cho Product Page -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-product.css">
 </head>
@@ -41,10 +43,9 @@
         <!-- Main Content -->
         <div class="main-content">
             <!-- Breadcrumb -->
-            <div class="breadcrumb">
-                Trang chủ / Sản phẩm
-            </div>
-
+                 <div class="breadcrumb">
+                    <span>Trang chủ / Sửa sản phẩm</span>
+                </div>
             <div class="admin-container">
                 <h1>Danh sách sản phẩm</h1>
       
@@ -129,13 +130,34 @@
 
                 <!-- Pagination -->
                 <div class="pagination">
-                    <a href="#" class="disabled">Trang đầu</a>
-                    <a href="#" class="disabled">Trước</a>
-                    <span class="active">1</span>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">Sau</a>
-                    <a href="#">Trang cuối</a>
+                    <c:if test="${totalPages > 1}">
+                        <c:set var="baseUrl" value="${pageContext.request.contextPath}/admin/product/list?" />
+                        <c:if test="${not empty param.keyword}">
+                            <c:set var="baseUrl" value="${baseUrl}keyword=${fn:escapeXml(param.keyword)}&" />
+                        </c:if>
+                        <c:if test="${not empty param.maHang}">
+                            <c:set var="baseUrl" value="${baseUrl}maHang=${param.maHang}&" />
+                        </c:if>
+                        <!-- Trang đầu -->
+                        <a href="${baseUrl}page=1" class="${page == 1 ? 'disabled' : ''}">Trang đầu</a>
+                        <!-- Trước -->
+                        <a href="${baseUrl}page=${page - 1}" class="${page == 1 ? 'disabled' : ''}">Trước</a>
+                        <!-- Số trang -->
+                        <c:forEach var="i" begin="1" end="${totalPages}">
+                            <c:choose>
+                                <c:when test="${i == page}">
+                                    <span class="active">${i}</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="${baseUrl}page=${i}">${i}</a>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                        <!-- Sau -->
+                        <a href="${baseUrl}page=${page + 1}" class="${page == totalPages ? 'disabled' : ''}">Sau</a>
+                        <!-- Trang cuối -->
+                        <a href="${baseUrl}page=${totalPages}" class="${page == totalPages ? 'disabled' : ''}">Trang cuối</a>
+                    </c:if>
                 </div>
             </div>
         </div>

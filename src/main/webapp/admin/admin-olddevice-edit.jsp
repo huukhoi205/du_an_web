@@ -6,7 +6,7 @@
     <title>Chỉnh sửa máy cũ</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-base.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-components.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-pages.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-customer.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-responsive.css">
 </head>
 <body>

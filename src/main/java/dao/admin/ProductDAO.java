@@ -366,6 +366,35 @@ public class ProductDAO {
         }
     }
 
+    public int countProducts(String keyword, Integer maHang, String tinhTrang) throws SQLException {
+        StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM sanpham WHERE 1=1");
+        List<Object> params = new ArrayList<>();
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append(" AND TenSP LIKE ?");
+            params.add("%" + keyword.trim() + "%");
+        }
+        if (maHang != null) {
+            sql.append(" AND MaHang = ?");
+            params.add(maHang);
+        }
+        if (tinhTrang != null && !tinhTrang.trim().isEmpty()) {
+            sql.append(" AND TinhTrang = ?");
+            params.add(tinhTrang.trim());
+        }
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
+
     private Product mapRowToProduct(ResultSet rs) throws SQLException {
         Product p = new Product();
         p.setMaSP(rs.getInt("MaSP"));

@@ -44,6 +44,10 @@ public class ProductService {
         return productDAO.searchWithPaging(keyword, maHang, tinhTrang, limit, offset, sortBy);
     }
 
+    public int countProducts(String keyword, Integer maHang, String tinhTrang) throws Exception {
+        return productDAO.countProducts(keyword, maHang, tinhTrang);
+    }
+
     private void validateProduct(Product product) throws Exception {
         if (product.getTenSP() == null || product.getTenSP().trim().isEmpty()) {
             throw new IllegalArgumentException("Tên sản phẩm không được để trống");

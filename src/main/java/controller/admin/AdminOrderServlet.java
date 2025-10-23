@@ -39,6 +39,19 @@ public class AdminOrderServlet extends HttpServlet {
             case "/detail":
                 showOrderDetail(request, response);
                 break;
+            // Thêm các case mới
+            case "/confirm":
+                confirmOrder(request, response);
+                break;
+            case "/confirm-payment":
+                confirmPayment(request, response);
+                break;
+            case "/complete":
+                completeOrder(request, response);
+                break;
+            case "/cancel":
+                cancelOrder(request, response);
+                break;
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
@@ -232,6 +245,102 @@ public class AdminOrderServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/admin/order/list?error=invalidMaDH");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/admin/order/list?error=serverError");
+        }
+    }
+
+    // Các method mới cho xử lý trạng thái đơn hàng
+    private void confirmOrder(HttpServletRequest request, HttpServletResponse response) 
+            throws IOException {
+        try {
+            String maDHParam = request.getParameter("maDH");
+            if (maDHParam == null || maDHParam.trim().isEmpty()) {
+                response.sendRedirect(request.getContextPath() + "/admin/order/list?error=invalidMaDH");
+                return;
+            }
+
+            int maDH = Integer.parseInt(maDHParam);
+            boolean success = orderService.updateOrderStatus(maDH, "DangGiao");
+            
+            if (success) {
+                response.sendRedirect(request.getContextPath() + "/admin/order/list?success=confirmed");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/admin/order/list?error=confirmFailed");
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/admin/order/list?error=invalidMaDH");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/admin/order/list?error=serverError");
+        }
+    }
+
+    private void confirmPayment(HttpServletRequest request, HttpServletResponse response) 
+            throws IOException {
+        try {
+            String maDHParam = request.getParameter("maDH");
+            if (maDHParam == null || maDHParam.trim().isEmpty()) {
+                response.sendRedirect(request.getContextPath() + "/admin/order/list?error=invalidMaDH");
+                return;
+            }
+
+            int maDH = Integer.parseInt(maDHParam);
+            boolean success = orderService.updateOrderStatus(maDH, "DaThanhToan");
+            
+            if (success) {
+                response.sendRedirect(request.getContextPath() + "/admin/order/list?success=paymentConfirmed");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/admin/order/list?error=paymentConfirmFailed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/admin/order/list?error=serverError");
+        }
+    }
+
+    private void completeOrder(HttpServletRequest request, HttpServletResponse response) 
+            throws IOException {
+        try {
+            String maDHParam = request.getParameter("maDH");
+            if (maDHParam == null || maDHParam.trim().isEmpty()) {
+                response.sendRedirect(request.getContextPath() + "/admin/order/list?error=invalidMaDH");
+                return;
+            }
+
+            int maDH = Integer.parseInt(maDHParam);
+            boolean success = orderService.updateOrderStatus(maDH, "HoanTat");
+            
+            if (success) {
+                response.sendRedirect(request.getContextPath() + "/admin/order/list?success=completed");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/admin/order/list?error=completeFailed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/admin/order/list?error=serverError");
+        }
+    }
+
+    private void cancelOrder(HttpServletRequest request, HttpServletResponse response) 
+            throws IOException {
+        try {
+            String maDHParam = request.getParameter("maDH");
+            if (maDHParam == null || maDHParam.trim().isEmpty()) {
+                response.sendRedirect(request.getContextPath() + "/admin/order/list?error=invalidMaDH");
+                return;
+            }
+
+            int maDH = Integer.parseInt(maDHParam);
+            boolean success = orderService.updateOrderStatus(maDH, "Huy");
+            
+            if (success) {
+                response.sendRedirect(request.getContextPath() + "/admin/order/list?success=cancelled");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/admin/order/list?error=cancelFailed");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/admin/order/list?error=serverError");

@@ -33,6 +33,15 @@ public class OrderService {
         return orderDAO.updateOrderStatusAndTotal(maDH, trangThai, tongTien);
     }
 
+    // Method mới: Cập nhật chỉ trạng thái
+    public boolean updateOrderStatus(int maDH, String trangThai) {
+        Order order = getOrderById(maDH);
+        if (order == null) {
+            return false;
+        }
+        return orderDAO.updateOrderStatusAndTotal(maDH, trangThai, order.getTongTien());
+    }
+
     public boolean deleteOrder(int maDH) {
         return orderDAO.deleteOrder(maDH);
     }
