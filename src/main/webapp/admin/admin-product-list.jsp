@@ -108,7 +108,7 @@
                                 <td>${status.index + 1}</td>
                                 <td>
                                     <c:if test="${not empty p.hinhAnh}">
-                                        <img src="${pageContext.request.contextPath}/Uploads/${p.hinhAnh}" 
+                                       <img src="${pageContext.request.contextPath}/image/${p.hinhAnh}"
                                              alt="${p.tenSP}" 
                                              width="60"
                                              height="60" />

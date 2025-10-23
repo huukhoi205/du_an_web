@@ -298,7 +298,7 @@ public class AdminProductServlet extends HttpServlet {
             
             String fileName = System.currentTimeMillis() + "_" + originalFileName;
             
-            String uploadDir = getServletContext().getRealPath("/Uploads");
+            String uploadDir = getServletContext().getRealPath("/image");
             File uploadFolder = new File(uploadDir);
             if (!uploadFolder.exists()) uploadFolder.mkdirs();
             
