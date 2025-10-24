@@ -11,11 +11,12 @@ public class OldDevice {
     private BigDecimal giaDeXuat;
     private BigDecimal giaThoaThuan;
     private String trangThai;
+    private String diaChiNhan;
 
     public OldDevice() {}
 
     public OldDevice(int maTMC, int maND, String tenMay, String hangSX, String tinhTrang,
-                     BigDecimal giaDeXuat, BigDecimal giaThoaThuan, String trangThai) {
+                     BigDecimal giaDeXuat, BigDecimal giaThoaThuan, String trangThai, String diaChiNhan) {
         this.maTMC = maTMC;
         this.maND = maND;
         this.tenMay = tenMay;
@@ -24,6 +25,7 @@ public class OldDevice {
         this.giaDeXuat = giaDeXuat;
         this.giaThoaThuan = giaThoaThuan;
         this.trangThai = trangThai;
+        this.diaChiNhan = diaChiNhan;
     }
 
     public int getMaTMC() { return maTMC; }
@@ -49,4 +51,7 @@ public class OldDevice {
 
     public String getTrangThai() { return trangThai; }
     public void setTrangThai(String trangThai) { this.trangThai = trangThai; }
+
+    public String getDiaChiNhan() { return diaChiNhan; }
+    public void setDiaChiNhan(String diaChiNhan) { this.diaChiNhan = diaChiNhan; }
 }

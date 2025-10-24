@@ -376,12 +376,14 @@
                     </div>
                     
                     <!-- Success Title -->
-                    <h1 class="success-title">Đăng ký thu mua thành công!</h1>
+                    <h1 class="success-title">Chi tiết đơn thu mua</h1>
                     
                     <!-- Success Message -->
                     <p class="success-message">
-                        Cảm ơn <strong><%= userProfile != null ? userProfile.getHoTen() : "khách hàng" %></strong> đã đăng ký thu mua thành công của chúng tôi.<br>
-                        KT Store sẽ sớm liên hệ với bạn để định giá và thu mua thiết bị.
+                        Mã đơn: <strong>#<%= exchangeRequest.getMaTMC() %></strong><br>
+                        Trạng thái: <span class="status-badge status-<%= exchangeRequest.getTrangThai().toLowerCase() %>">
+                            <%= exchangeRequest.getTrangThai() %>
+                        </span>
                     </p>
                     
                     <!-- Progress Steps -->
@@ -390,7 +392,7 @@
                             <div class="step-icon">
                                 <i class="fas fa-check"></i>
                             </div>
-                            <span>Đăng ký</span>
+                            <span>Đặt lịch</span>
                         </div>
                         <div class="step <%= "DangDinhGia".equals(exchangeRequest.getTrangThai()) || "HoanTat".equals(exchangeRequest.getTrangThai()) ? "completed" : "pending" %>">
                             <div class="step-icon">
@@ -400,13 +402,13 @@
                         </div>
                         <div class="step <%= "DangDinhGia".equals(exchangeRequest.getTrangThai()) || "HoanTat".equals(exchangeRequest.getTrangThai()) ? "completed" : "pending" %>">
                             <div class="step-icon">
-                                <i class="fas fa-search"></i>
+                                <i class="fas fa-calculator"></i>
                             </div>
-                            <span>Định giá</span>
+                            <span>Đang định giá</span>
                         </div>
                         <div class="step <%= "HoanTat".equals(exchangeRequest.getTrangThai()) ? "completed" : "pending" %>">
                             <div class="step-icon">
-                                <i class="fas fa-check"></i>
+                                <i class="fas fa-flag-checkered"></i>
                             </div>
                             <span>Hoàn thành</span>
                         </div>
@@ -414,7 +416,7 @@
                     
                     <!-- Exchange Information -->
                     <div class="repair-info">
-                        <h3 style="margin-bottom: 20px; color: #333; text-align: center;">Thông tin đăng ký thu mua</h3>
+                        <h3 style="margin-bottom: 20px; color: #333; text-align: center;">Thông tin đặt lịch thu mua</h3>
                         
                         <div class="info-item">
                             <span class="info-label">Mã thu mua:</span>
@@ -422,22 +424,7 @@
                         </div>
                         
                         <div class="info-item">
-                            <span class="info-label">Họ và tên:</span>
-                            <span class="info-value"><%= userProfile != null ? userProfile.getHoTen() : "N/A" %></span>
-                        </div>
-                        
-                        <div class="info-item">
-                            <span class="info-label">Số điện thoại:</span>
-                            <span class="info-value"><%= userProfile != null ? userProfile.getSoDT() : "N/A" %></span>
-                        </div>
-                        
-                        <div class="info-item">
-                            <span class="info-label">Khu vực:</span>
-                            <span class="info-value"><%= exchangeRequest.getDiaChi() != null ? exchangeRequest.getDiaChi() : "Chưa xác định" %></span>
-                        </div>
-                        
-                        <div class="info-item">
-                            <span class="info-label">Tên thiết bị cần thu:</span>
+                            <span class="info-label">Tên máy cần thu mua:</span>
                             <span class="info-value"><%= exchangeRequest.getTenMay() %></span>
                         </div>
                         
@@ -447,27 +434,36 @@
                         </div>
                         
                         <div class="info-item">
-                            <span class="info-label">Tình trạng thiết bị:</span>
+                            <span class="info-label">Tình trạng:</span>
                             <span class="info-value"><%= exchangeRequest.getTinhTrang() %></span>
                         </div>
                         
                         <div class="info-item">
-                            <span class="info-label">Sản phẩm muốn đổi:</span>
+                            <span class="info-label">Khu vực:</span>
+                            <span class="info-value"><%= exchangeRequest.getDiaChi() != null ? exchangeRequest.getDiaChi() : "Chưa xác định" %></span>
+                        </div>
+                        
+                        <div class="info-item">
+                            <span class="info-label">Sản phẩm nâng cấp:</span>
                             <span class="info-value">
                                 <%= exchangeRequest.getSanPhamLienQuan() != null && !exchangeRequest.getSanPhamLienQuan().trim().isEmpty() ? 
                                     exchangeRequest.getSanPhamLienQuan() : "Không có" %>
                             </span>
                         </div>
                         
+                        <% if (exchangeRequest.getMoTaChiTiet() != null && !exchangeRequest.getMoTaChiTiet().trim().isEmpty()) { %>
                         <div class="info-item">
-                            <span class="info-label">Thời gian dự kiến:</span>
-                            <span class="info-value">Trong vòng 24h</span>
+                            <span class="info-label">Mô tả chi tiết:</span>
+                            <span class="info-value" style="text-align: left; white-space: pre-wrap;">
+                                <%= exchangeRequest.getMoTaChiTiet() %>
+                            </span>
                         </div>
+                        <% } %>
                         
                         <div class="info-item total-item">
-                            <span class="info-label">Giá đề xuất của khách hàng:</span>
+                            <span class="info-label">Giá đề xuất:</span>
                             <span class="info-value">
-                                <% if (exchangeRequest.getGiaDeXuat() != null && exchangeRequest.getGiaDeXuat().compareTo(java.math.BigDecimal.ZERO) > 0) { %>
+                                <% if (exchangeRequest.getGiaDeXuat() > 0) { %>
                                     <%= String.format("%,.0f", exchangeRequest.getGiaDeXuat()) %>₫
                                 <% } else { %>
                                     Chưa định giá
@@ -475,25 +471,41 @@
                             </span>
                         </div>
                         
+                        <% if (exchangeRequest.getGiaThoaThuan() != null && exchangeRequest.getGiaThoaThuan() > 0) { %>
                         <div class="info-item total-item">
-                            <span class="info-label">Giá đề xuất của cửa hàng:</span>
+                            <span class="info-label">Giá thỏa thuận:</span>
                             <span class="info-value">
-                                <% if (exchangeRequest.getGiaThoaThuan() != null && exchangeRequest.getGiaThoaThuan().compareTo(java.math.BigDecimal.ZERO) > 0) { %>
-                                    <%= String.format("%,.0f", exchangeRequest.getGiaThoaThuan()) %>₫
-                                <% } else { %>
-                                    Đang chờ admin định giá
-                                <% } %>
+                                <%= String.format("%,.0f", exchangeRequest.getGiaThoaThuan()) %>₫
+                            </span>
+                        </div>
+                        <% } %>
+                        
+                        <div class="info-item">
+                            <span class="info-label">Ngày tạo:</span>
+                            <span class="info-value">
+                                <%= exchangeRequest.getNgayTao() != null ? 
+                                    new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(exchangeRequest.getNgayTao()) : 
+                                    "Chưa xác định" %>
+                            </span>
+                        </div>
+                        
+                        <div class="info-item">
+                            <span class="info-label">Trạng thái:</span>
+                            <span class="info-value">
+                                <span class="status-badge status-<%= exchangeRequest.getTrangThai().toLowerCase() %>">
+                                    <%= exchangeRequest.getTrangThai() %>
+                                </span>
                             </span>
                         </div>
                     </div>
                     
                     <!-- Action Buttons -->
                     <div class="action-buttons">
-                        <a href="${pageContext.request.contextPath}/views/index.jsp" class="btn btn-primary">
-                            <i class="fas fa-home"></i> Về trang chủ
+                        <a href="${pageContext.request.contextPath}/user-services" class="btn btn-primary">
+                            <i class="fas fa-arrow-left"></i> Quay lại danh sách
                         </a>
                         <a href="${pageContext.request.contextPath}/views/exchange.jsp" class="btn btn-secondary">
-                            <i class="fas fa-file-alt"></i> Đăng ký khác
+                            <i class="fas fa-plus"></i> Tạo đơn mới
                         </a>
                     </div>
                 </div>

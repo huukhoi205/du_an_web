@@ -36,6 +36,8 @@
 
         <!-- Main Content -->
         <div class="main-content">
+            <div class="breadcrumb"> 
+                Trang chủ / Danh mục / Thêm danh mục</div>
             <div class="admin-container">
                 <h1>Thêm danh mục</h1>
                 <form action="${pageContext.request.contextPath}/admin/category/add" method="post">

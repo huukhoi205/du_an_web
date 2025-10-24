@@ -9,6 +9,9 @@ public class OrderDetail {
 
     public OrderDetail() {}
 
+    // Field mới cho tên sản phẩm
+    private String tenSanPham;
+
     public OrderDetail(int maDH, int maSP, int soLuong, double gia) {
         this.maDH = maDH;
         this.maSP = maSP;
@@ -25,6 +28,11 @@ public class OrderDetail {
     public void setSoLuong(int soLuong) { this.soLuong = soLuong; }
     public double getGia() { return gia; }
     public void setGia(double gia) { this.gia = gia; }
+<<<<<<< HEAD
+=======
+
+    // Getter/Setter mới
+>>>>>>> branch 'master' of https://github.com/huukhoi205/du_an_web.git
     public String getTenSanPham() { return tenSanPham; }
     public void setTenSanPham(String tenSanPham) { this.tenSanPham = tenSanPham; }
 }

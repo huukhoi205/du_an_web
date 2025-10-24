@@ -36,6 +36,8 @@
 
         <!-- Main Content -->
         <div class="main-content">
+            <div class="breadcrumb">
+                Trang chủ / Danh mục / Sửa danh mục</div>
             <div class="admin-container">
                 <h1>Sửa danh mục</h1>
                 <form action="${pageContext.request.contextPath}/admin/category/edit" method="post">

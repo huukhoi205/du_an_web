@@ -6,7 +6,7 @@
     <title>Quản lý thu máy cũ</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-base.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-components.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-pages.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-customer.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-responsive.css">
 </head>
 <body>
@@ -37,6 +37,9 @@
 
     <!-- Main Content -->
     <div class="main-content">
+        <div class="breadcrumb">
+                Trang chủ / Thu máy cũ
+        </div>
         <div class="admin-container">
             <h1>Danh sách máy cũ thu mua</h1>
             <div class="toolbar">
@@ -54,6 +57,7 @@
                     <th>Giá đề xuất</th>
                     <th>Giá thỏa thuận</th>
                     <th>Trạng thái</th>
+                    <th>Địa chỉ nhận</th>
                     <th>Hành động</th>
                 </tr>
                 </thead>
@@ -68,6 +72,7 @@
                         <td>${item.giaDeXuat}</td>
                         <td>${item.giaThoaThuan}</td>
                         <td>${item.trangThai}</td>
+                        <td>${item.diaChiNhan}</td>
                         <td>
                             <a href="AdminOldDeviceServlet?action=edit&id=${item.maTMC}" class="btn">Sửa</a>
                             <a href="AdminOldDeviceServlet?action=delete&id=${item.maTMC}" onclick="return confirm('Xóa máy này?')" class="btn btn-danger">Xóa</a>

@@ -6,7 +6,7 @@
     <title>Quản lý lịch sửa chữa</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-base.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-components.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-pages.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-customer.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-responsive.css">
 </head>
 <body>
@@ -34,9 +34,11 @@
             <a href="${pageContext.request.contextPath}/AdminRepairScheduleServlet" class="menu-item active"><span>🛠️</span>Lịch sửa chữa</a>
         </nav>
     </div>
-
     <!-- Main Content -->
     <div class="main-content">
+        <div class="breadcrumb">
+                Trang chủ / Sửa chữa
+        </div>
         <div class="admin-container">
             <h1>Danh sách lịch sửa chữa</h1>
             <div class="toolbar">

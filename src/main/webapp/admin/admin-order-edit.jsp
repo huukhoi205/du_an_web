@@ -38,6 +38,9 @@
 
         <!-- Main Content -->
         <div class="main-content">
+            <div class="breadcrumb">
+                Trang chủ / Sửa Đơn hàng
+            </div>
             <div class="admin-container">
                 <h1>Chi tiết đơn hàng</h1>
                 <c:if test="${not empty order}">

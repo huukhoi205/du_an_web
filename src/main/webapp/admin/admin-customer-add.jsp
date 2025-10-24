@@ -37,6 +37,8 @@
 
         <!-- Main Content -->
         <div class="main-content">
+            <div class="breadcrumb">
+                Trang chủ / Khách hàng / Thêm khách hàng</div>
             <div class="admin-container">
                 <h1>Thêm khách hàng</h1>
                 <form action="${pageContext.request.contextPath}/admin/customer/add" method="post">

@@ -6,7 +6,7 @@
     <title>Chỉnh sửa lịch sửa chữa</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-base.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-components.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-pages.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-customer.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cssadmin/admin-responsive.css">
 </head>
 <body>
@@ -32,6 +32,9 @@
 
     <div class="main-content">
         <div class="admin-container">
+        <div class="breadcrumb">
+                Trang chủ / Sửa chữa
+        </div>        	
             <%
             RepairSchedule item = (RepairSchedule) request.getAttribute("item");
             if (item == null) {

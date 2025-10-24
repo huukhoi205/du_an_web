@@ -98,25 +98,41 @@ public class AdminProductServlet extends HttpServlet {
                 // Bỏ qua nếu không phải số hợp lệ
             }
         }
-        
-        // Nếu có tham số tìm kiếm, sử dụng search, nếu không thì lấy tất cả
-        List<Product> productList;
-        if ((keyword != null && !keyword.trim().isEmpty()) || maHang != null || 
-            (tinhTrang != null && !tinhTrang.trim().isEmpty())) {
-            // Sử dụng tìm kiếm với phân trang (có thể điều chỉnh limit/offset)
-            productList = productService.searchProducts(keyword, maHang, tinhTrang, 1000, 0, null);
-        } else {
-            productList = productService.getAllProducts();
+
+        // Phân trang
+        int pageSize = 10;
+        int page = 1;
+        String pageParam = request.getParameter("page");
+        if (pageParam != null) {
+            try {
+                page = Integer.parseInt(pageParam);
+                if (page < 1) page = 1;
+            } catch (NumberFormatException e) {
+                page = 1;
+            }
         }
-        
+        int offset = (page - 1) * pageSize;
+
+        // Đếm tổng số sản phẩm phù hợp
+        int totalProducts = productService.countProducts(keyword, maHang, tinhTrang);
+        int totalPages = (int) Math.ceil(totalProducts / (double) pageSize);
+        if (page > totalPages && totalPages > 0) {
+            page = totalPages;
+            offset = (page - 1) * pageSize;
+        }
+
+        // Lấy danh sách sản phẩm theo trang
+        List<Product> productList = productService.searchProducts(keyword, maHang, tinhTrang, pageSize, offset, null);
+
         request.setAttribute("productList", productList);
         request.setAttribute("brands", brandService.getAllBrands());
-        
-        // Giữ lại giá trị tìm kiếm để hiển thị lại trong form
         request.setAttribute("keyword", keyword);
         request.setAttribute("selectedMaHang", maHang);
         request.setAttribute("selectedTinhTrang", tinhTrang);
-        
+        request.setAttribute("page", page);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("totalProducts", totalProducts);
+
         request.getRequestDispatcher("/admin/admin-product-list.jsp").forward(request, response);
     }
 
@@ -282,7 +298,7 @@ public class AdminProductServlet extends HttpServlet {
             
             String fileName = System.currentTimeMillis() + "_" + originalFileName;
             
-            String uploadDir = getServletContext().getRealPath("/Uploads");
+            String uploadDir = getServletContext().getRealPath("/image");
             File uploadFolder = new File(uploadDir);
             if (!uploadFolder.exists()) uploadFolder.mkdirs();
             

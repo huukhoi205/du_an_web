@@ -74,6 +74,7 @@ public class AdminOldDeviceServlet extends HttpServlet {
             o.setGiaThoaThuan(new BigDecimal(req.getParameter("giaThoaThuan")));
         } catch (Exception e) { o.setGiaThoaThuan(null); }
         o.setTrangThai(req.getParameter("trangThai"));
+        o.setDiaChiNhan(req.getParameter("diaChiNhan"));
         return o;
     }
 }

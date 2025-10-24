@@ -64,6 +64,8 @@
     </div>
 
     <div class="main-content">
+    	<div class="breadcrumb">
+            Trang chủ / lịch sửa chữa / thêm lịch </div>
         <div class="admin-container">
             <h1>Thêm lịch sửa chữa</h1>
             

@@ -58,6 +58,7 @@
 
         <!-- Main Content -->
         <div class="main-content">
+            <div class="breadcrumb">Trang chủ / Đơn hàng / Tạo đơn hàng</div>
             <div class="admin-container">
                 <h1>Tạo đơn hàng</h1>
                 <form action="${pageContext.request.contextPath}/admin/order/add" method="post">
