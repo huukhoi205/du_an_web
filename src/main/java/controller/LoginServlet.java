@@ -1,7 +1,9 @@
 package controller;
 
 import dao.LoginDAO;
+import dao.CartDAO;
 import util.MD5Util;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,10 +47,22 @@ public class LoginServlet extends HttpServlet {
             if (userData != null) {
                 // Đăng nhập thành công
                 HttpSession session = request.getSession();
-                session.setAttribute("userId", userData[1]); // MaND
+                Integer userId = (Integer) userData[1]; // MaND
+                session.setAttribute("userId", userId);
                 session.setAttribute("userName", userData[4]); // HoTen
                 session.setAttribute("userEmail", userData[5]); // Email
                 session.setAttribute("userRole", userData[3]); // VaiTro
+                
+                // Load giỏ hàng từ database cho user này (chỉ nếu chưa có giỏ hàng trong session)
+                List<controller.CartServlet.CartItem> existingCartItems = (List<controller.CartServlet.CartItem>) session.getAttribute("cartItems");
+                if (existingCartItems == null || existingCartItems.isEmpty()) {
+                    CartDAO cartDAO = new CartDAO();
+                    List<controller.CartServlet.CartItem> cartItems = cartDAO.loadCartItems(userId);
+                    session.setAttribute("cartItems", cartItems);
+                    System.out.println("Loaded cart from database for user " + userId + ": " + cartItems.size() + " items");
+                } else {
+                    System.out.println("User " + userId + " already has cart in session with " + existingCartItems.size() + " items, keeping session cart");
+                }
                 
                 // Kiểm tra nếu có redirect URL từ "Mua ngay"
                 String redirectUrl = request.getParameter("redirect");

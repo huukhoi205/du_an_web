@@ -1,4 +1,5 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="model.UserProfile" %>
 <%
     request.setCharacterEncoding("UTF-8");
     response.setCharacterEncoding("UTF-8");
@@ -9,7 +10,7 @@
     String userRole = (String) session.getAttribute("userRole");
     
     // Lấy thông tin profile từ request (được set bởi ProfileServlet)
-    dao.ProfileDAO.UserProfile userProfile = (dao.ProfileDAO.UserProfile) request.getAttribute("userProfile");
+    UserProfile userProfile = (UserProfile) request.getAttribute("userProfile");
     
     // Lấy thông báo
     String successMessage = (String) request.getAttribute("success");
@@ -91,7 +92,7 @@
             <div class="nav-content">
                 <button class="menu-toggle">
                     <i class="fas fa-bars"></i>
-                    <span>DANH MỤC<br>SẢN PHẨM</span>
+                    <span>DANH MỤC</span>
                 </button>
 
                 <ul class="nav-menu">
@@ -123,7 +124,7 @@
                         <a href="${pageContext.request.contextPath}/views/exchange.jsp" class="nav-link">THU ĐIỆN THOẠI</a>
                     </li>
                     <li class="nav-item">
-                        <a href="${pageContext.request.contextPath}/views/repair.jsp" class="nav-link">SỬA CHỮA</a>
+                        <a href="${pageContext.request.contextPath}/repair" class="nav-link">SỬA CHỮA</a>
                     </li>
                 </ul>
             </div>

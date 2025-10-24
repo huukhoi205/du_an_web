@@ -1,10 +1,32 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="model.UserProfile, model.RepairRequest, java.util.List" %>
 
 <%
-    // Láº¥y thÃ´ng tin user tá»« session
-    String userName = (String) session.getAttribute("userName");`n        String userRole = (String) session.getAttribute("userRole");
+    request.setCharacterEncoding("UTF-8");
+    response.setCharacterEncoding("UTF-8");
+    response.setContentType("text/html; charset=UTF-8");
+    
+    // Lấy thông tin user từ session
+    String userName = (String) session.getAttribute("userName");
     Integer userId = (Integer) session.getAttribute("userId");
     String userRole = (String) session.getAttribute("userRole");
+    
+    // Lấy thông tin user từ request attribute (được set bởi RepairServlet)
+    UserProfile userProfile = (UserProfile) request.getAttribute("userProfile");
+    List<RepairRequest> repairHistory = (List<RepairRequest>) request.getAttribute("repairHistory");
+    
+    // Debug: Hiển thị thông tin user
+    System.out.println("repair.jsp - userProfile: " + (userProfile != null ? userProfile.toString() : "null"));
+    if (userProfile != null) {
+        System.out.println("repair.jsp - HoTen: " + userProfile.getHoTen());
+        System.out.println("repair.jsp - Email: " + userProfile.getEmail());
+        System.out.println("repair.jsp - SoDT: " + userProfile.getSoDT());
+        System.out.println("repair.jsp - MaND: " + userProfile.getMaND());
+    }
+    
+    // Lấy thông báo
+    String success = (String) request.getAttribute("success");
+    String error = (String) request.getAttribute("error");
 %>
 
 <!DOCTYPE html>
@@ -12,7 +34,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Äáº·t lá»‹ch háº¹n báº£o hÃ nh vÃ  sá»­a chá»¯a - KT Store</title>
+    <title>Đặt lịch hẹn bảo hành và sửa chữa - KT Store</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/repair.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -33,16 +55,16 @@
                 <div class="search-box">
                     <i class="fas fa-search"></i>
                     <form action="search.jsp" method="get">
-                        <input type="text" name="q" placeholder="TÃ¬m Kiáº¿m Sáº£n pháº©m" id="searchInput">
+                        <input type="text" name="q" placeholder="Tìm Kiếm Sản phẩm" id="searchInput">
                     </form>
                 </div>
 
                 <!-- Header Actions -->
                 <div class="header-actions">
-                    <a href="cart.jsp" class="icon-btn" title="Giá» hÃ ng">
+                    <a href="${pageContext.request.contextPath}/cart" class="icon-btn" title="Giỏ hàng">
                         <i class="fas fa-shopping-cart"></i>
                     </a>
-                    <a href="wishlist.jsp" class="icon-btn" title="YÃªu thÃ­ch">
+                    <a href="wishlist.jsp" class="icon-btn" title="Yêu thích">
                         <i class="far fa-heart"></i>
                     </a>
                     
@@ -55,19 +77,19 @@
                                 <i class="fas fa-chevron-down"></i>
                             </button>
                             <div class="user-dropdown" id="userDropdown">
-                                <a href="profile.jsp"><i class="far fa-user"></i> Trang cÃ¡ nhÃ¢n</a>
-                                <a href="orders.jsp"><i class="fas fa-box"></i> ÄÆ¡n hÃ ng</a>
+                                <a href="${pageContext.request.contextPath}/profile"><i class="far fa-user"></i> Trang cá nhân</a>
+                                <a href="orders.jsp"><i class="fas fa-box"></i> Đơn hàng</a>
                                 <% if ("Admin".equals(userRole)) { %>
-                                <a href="admin/dashboard.jsp"><i class="fas fa-cog"></i> Quáº£n trá»‹</a>
+                                <a href="admin/dashboard.jsp"><i class="fas fa-cog"></i> Quản trị</a>
                                 <% } %>
                                 <hr>
-                                <a href="logout.jsp" class="logout-link"><i class="fas fa-sign-out-alt"></i> ÄÄƒng xuáº¥t</a>
+                                <a href="${pageContext.request.contextPath}/views/logout.jsp" class="logout-link"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
                             </div>
                         </div>
                     <% } else { %>
-                        <a href="login.jsp" class="btn-login">ÄÄ‚NG NHáº¬P</a>
+                        <a href="login.jsp" class="btn-login">ĐĂNG NHẬP</a>
                         <span class="separator">|</span>
-                        <a href="register.jsp" class="btn-register">ÄÄ‚NG KÃ</a>
+                        <a href="register.jsp" class="btn-register">ĐĂNG KÝ</a>
                     <% } %>
                 </div>
             </div>
@@ -80,39 +102,42 @@
             <div class="nav-content">
                 <button class="menu-toggle">
                     <i class="fas fa-bars"></i>
-                    <span>DANH Má»¤C<br>Sáº¢N PHáº¨M</span>
+                    <span>DANH MỤC</span>
                 </button>
 
                 <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="${pageContext.request.contextPath}/views/index.jsp" class="nav-link">TRANG CHỦ</a>
+                    </li>
                     <li class="nav-item dropdown">
-                        <a href="${pageContext.request.contextPath}/views/new-phones.jsp" class="nav-link">
-                            ÄIá»†N THOáº I Má»šI
+                        <a href="${pageContext.request.contextPath}/products" class="nav-link">
+                            ĐIỆN THOẠI MỚI
                             <i class="fas fa-chevron-down"></i>
                         </a>
                         <div class="dropdown-menu">
-                            <a href="${pageContext.request.contextPath}/views/new-phones.jsp">iPhone</a>
-                            <a href="${pageContext.request.contextPath}/views/new-phones.jsp">Samsung</a>
-                            <a href="${pageContext.request.contextPath}/views/new-phones.jsp">Xiaomi</a>
-                            <a href="${pageContext.request.contextPath}/views/new-phones.jsp">OPPO</a>
-                            <a href="${pageContext.request.contextPath}/views/new-phones.jsp">Vivo</a>
+                            <a href="${pageContext.request.contextPath}/products?brand=Apple">iPhone</a>
+                            <a href="${pageContext.request.contextPath}/products?brand=Samsung">Samsung</a>
+                            <a href="${pageContext.request.contextPath}/products?brand=Xiaomi">Xiaomi</a>
+                            <a href="${pageContext.request.contextPath}/products?brand=OPPO">OPPO</a>
+                            <a href="${pageContext.request.contextPath}/products?brand=Vivo">Vivo</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
                         <a href="${pageContext.request.contextPath}/views/used-phones.jsp" class="nav-link">
-                            ÄIá»†N THOáº I CÅ¨
+                            ĐIỆN THOẠI CŨ
                             <i class="fas fa-chevron-down"></i>
                         </a>
                         <div class="dropdown-menu">
-                            <a href="${pageContext.request.contextPath}/views/used-phones.jsp">iPhone CÅ©</a>
-                            <a href="${pageContext.request.contextPath}/views/used-phones.jsp">Samsung CÅ©</a>
-                            <a href="${pageContext.request.contextPath}/views/used-phones.jsp">Táº¥t cáº£ Ä‘iá»‡n thoáº¡i cÅ©</a>
+                            <a href="${pageContext.request.contextPath}/views/used-phones.jsp">iPhone Cũ</a>
+                            <a href="${pageContext.request.contextPath}/views/used-phones.jsp">Samsung Cũ</a>
+                            <a href="${pageContext.request.contextPath}/views/used-phones.jsp">Tất cả điện thoại cũ</a>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a href="${pageContext.request.contextPath}/views/exchange.jsp" class="nav-link">THU ÄIá»†N THOáº I</a>
+                        <a href="${pageContext.request.contextPath}/views/exchange.jsp" class="nav-link">THU ĐIỆN THOẠI</a>
                     </li>
                     <li class="nav-item">
-                        <a href="repair.jsp" class="nav-link active">Sá»¬A CHá»®A</a>
+                        <a href="${pageContext.request.contextPath}/repair" class="nav-link active">SỬA CHỮA</a>
                     </li>
                 </ul>
             </div>
@@ -124,64 +149,100 @@
         <div class="container">
             <div class="repair-form-container">
                 <div class="form-header">
-                    <h1>Äáº¶T Lá»ŠCH Háº¸N Báº¢O HÃ€NH VÃ€ Sá»¬A CHá»®A</h1>
-                    <p class="voucher-text">(Nháº­n voucher 10% tá»‘i Ä‘a 50.000â‚« sau khi Ä‘áº·t lá»‹ch)</p>
+                    <h1>ĐẶT LỊCH HẸN BẢO HÀNH VÀ SỬA CHỮA</h1>
+                    <p class="voucher-text">(Nhận voucher 10% tối đa 50.000₫ sau khi đặt lịch)</p>
                 </div>
 
-                <form class="repair-form" action="repair-submit.jsp" method="post">
+                <!-- Thông báo -->
+                <% if (success != null) { %>
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle"></i>
+                    <%= success %>
+                </div>
+                <% } %>
+                
+                <% if (error != null) { %>
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <%= error %>
+                </div>
+                <% } %>
+
+                <form class="repair-form" action="${pageContext.request.contextPath}/repair" method="post">
                     <div class="form-row">
                         <div class="form-column">
                             <div class="form-group">
-                                <label for="fullName">Há» vÃ  tÃªn *</label>
-                                <input type="text" id="fullName" name="fullName" value="Nguyen Van A" required>
+                                <label for="fullName">Họ và tên *</label>
+                                <input type="text" id="fullName" name="fullName" 
+                                       value="<%= userProfile != null && userProfile.getHoTen() != null ? userProfile.getHoTen() : "" %>" 
+                                       placeholder="Nhập họ và tên của bạn" required>
                             </div>
                             
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" id="email" name="email" placeholder="Email (khÃ´ng báº¯t buá»™c)">
+                                <input type="email" id="email" name="email" 
+                                       value="<%= userProfile != null && userProfile.getEmail() != null ? userProfile.getEmail() : "" %>" 
+                                       placeholder="Nhập email của bạn">
                             </div>
                             
                             <div class="form-group">
-                                <label for="region">Chá»n khu vá»±c *</label>
-                                <input type="text" id="region" name="region" value="Miá»n Nam" required>
+                                <label for="tenThietBi">Tên thiết bị cần sửa chữa *</label>
+                                <input type="text" id="tenThietBi" name="tenThietBi" 
+                                       placeholder="VD: iPhone 11 Pro Max, Samsung Galaxy S21..." required>
                             </div>
                             
                             <div class="form-group">
-                                <label for="errorDescription">MÃ´ táº£ lá»—i *</label>
-                                <textarea id="errorDescription" name="errorDescription" rows="4" placeholder="MÃ´ táº£ lá»—i (Báº¯t buá»™c)" required></textarea>
+                                <label for="loaiLoi">Loại lỗi *</label>
+                                <select id="loaiLoi" name="loaiLoi" required onchange="toggleOtherError(); updateEstimatedPrice();">
+                                    <option value="">-- Chọn loại lỗi --</option>
+                                    <option value="Thay pin">Thay pin</option>
+                                    <option value="Thay màn hình">Thay màn hình</option>
+                                    <option value="Bảo hành máy lỗi do người bán">Bảo hành máy lỗi do người bán</option>
+                                    <option value="Hư main">Hư main</option>
+                                    <option value="Ép kính">Ép kính</option>
+                                    <option value="Khác">Khác</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group" id="moTaLoiKhacGroup" style="display: none;">
+                                <label for="moTaLoiKhac">Mô tả chi tiết lỗi *</label>
+                                <textarea id="moTaLoiKhac" name="moTaLoiKhac" rows="3" 
+                                          placeholder="Mô tả chi tiết lỗi của thiết bị..."></textarea>
                             </div>
                         </div>
 
                         <div class="form-column">
                             <div class="form-group">
-                                <label for="phone">Sá»‘ Ä‘iá»‡n thoáº¡i *</label>
-                                <input type="tel" id="phone" name="phone" value="0903.xxx.xxx" required>
+                                <label for="phone">Số điện thoại *</label>
+                                <input type="tel" id="phone" name="phone" 
+                                       value="<%= userProfile != null && userProfile.getSoDT() != null ? userProfile.getSoDT() : "" %>" 
+                                       placeholder="Nhập số điện thoại của bạn" 
+                                       pattern="[0-9]{10}" 
+                                       title="Số điện thoại phải có 10 chữ số" required>
                             </div>
                             
                             <div class="form-group">
-                                <label for="deviceModel">DÃ²ng mÃ¡y cáº§n sá»­a chá»¯a *</label>
-                                <input type="text" id="deviceModel" name="deviceModel" placeholder="DÃ²ng mÃ¡y (VD: iPhone 11 Pro Max, ...)" required>
+                                <label for="chiPhiDuKien">Chi phí dự kiến (VNĐ) *</label>
+                                <input type="text" id="chiPhiDuKien" name="chiPhiDuKien" 
+                                       placeholder="Chọn loại lỗi để hiển thị giá dự kiến...">
+                                <div id="priceNote" class="price-note" style="display: none; margin-top: 5px; font-size: 12px; color: #666; font-style: italic;"></div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="captcha-section">
-                        <div class="captcha-container">
-                            <input type="checkbox" id="captcha" name="captcha" required>
-                            <label for="captcha">I'm not a robot</label>
-                            <div class="captcha-logo">
-                                <img src="https://www.google.com/recaptcha/api2/anchor?k=6Lc..." alt="reCAPTCHA">
+                            
+                            <div class="form-group">
+                                <label>Lưu ý:</label>
+                                <div class="note-box">
+                                    <p><i class="fas fa-info-circle"></i> Chúng tôi sẽ liên hệ với bạn trong vòng 24h để xác nhận lịch hẹn.</p>
+                                    <p><i class="fas fa-gift"></i> Nhận voucher 10% tối đa 50.000₫ sau khi đặt lịch thành công.</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="captcha-links">
-                            <a href="#">Privacy</a> - <a href="#">Terms</a>
                         </div>
                     </div>
 
                     <div class="form-actions">
-                        <button type="submit" class="btn-submit">TIáº¾P Tá»¤C</button>
+                        <button type="submit" class="btn-submit">ĐẶT LỊCH SỬA CHỮA</button>
                     </div>
                 </form>
+                
             </div>
         </div>
     </main>
@@ -193,27 +254,27 @@
                 <div class="footer-col">
                     <div class="footer-logo">KT</div>
                     <div class="footer-links">
-                        <a href="#">GIá»šI THIá»†U Vá»€ CÃ”NG TY</a>
-                        <a href="#">CÃ‚U Há»ŽI THÆ¯á»œNG Gáº¶P</a>
-                        <a href="#">CHÃNH SÃCH Báº¢O Máº¬T</a>
-                        <a href="#">QUY CHáº¾ HOáº T Äá»˜NG</a>
+                        <a href="#">GIỚI THIỆU VỀ CÔNG TY</a>
+                        <a href="#">CÂU HỎI THƯỜNG GẶP</a>
+                        <a href="#">CHÍNH SÁCH BẢO MẬT</a>
+                        <a href="#">QUY CHẾ HOẠT ĐỘNG</a>
                     </div>
                 </div>
 
                 <div class="footer-col">
-                    <h3>KIá»‚M TRA HÃ“A ÄÆ N ÄIá»†N Tá»¬</h3>
-                    <a href="#">TRA Cá»¨U THÃ”NG TIN Báº¢O HÃ€NH</a>
-                    <a href="#">TIN TUYá»‚N Dá»¤NG</a>
-                    <a href="#">TIN KHUYáº¾N MÃƒI</a>
-                    <a href="#">HÆ¯á»šNG DáºªN ONLINE</a>
+                    <h3>KIỂM TRA HÓA ĐƠN ĐIỆN TỬ</h3>
+                    <a href="#">TRA CỨU THÔNG TIN BẢO HÀNH</a>
+                    <a href="#">TIN TUYỂN DỤNG</a>
+                    <a href="#">TIN KHUYẾN MÃI</a>
+                    <a href="#">HƯỚNG DẪN ONLINE</a>
                 </div>
 
                 <div class="footer-col">
-                    <h3>Há»† THá»NG Cá»¬A HÃ€NG</h3>
-                    <a href="#">Há»† THá»NG Báº¢O HÃ€NH</a>
-                    <a href="#">KIá»‚M TRA HÃ€NG APPLE CHÃNH HÃƒNG</a>
-                    <a href="#">GIá»šI THIá»†U Äá»I TÃC</a>
-                    <a href="#">CHÃNH SÃCH Äá»”I TRáº¢</a>
+                    <h3>HỆ THỐNG CỬA HÀNG</h3>
+                    <a href="#">HỆ THỐNG BẢO HÀNH</a>
+                    <a href="#">KIỂM TRA HÀNG APPLE CHÍNH HÃNG</a>
+                    <a href="#">GIỚI THIỆU ĐỐI TÁC</a>
+                    <a href="#">CHÍNH SÁCH ĐỔI TRẢ</a>
                 </div>
 
                 <div class="footer-col">
@@ -226,7 +287,79 @@
             </div>
         </div>
     </footer>
-    <script src="${pageContext.request.contextPath}/resources/js/script-new.js"></script>`n    <style>`n        .user-menu { position: relative; }`n        .user-dropdown { `n            position: absolute !important; `n            top: 100% !important; `n            right: 0 !important; `n            margin-top: 10px !important; `n            background: #fff !important; `n            border-radius: 10px !important; `n            box-shadow: 0 5px 20px rgba(0,0,0,0.15) !important; `n            min-width: 200px !important; `n            display: none !important; `n            z-index: 1000 !important; `n        }`n        .user-dropdown.show { display: block !important; }`n        .user-dropdown a { `n            display: flex !important; `n            align-items: center !important; `n            gap: 10px !important; `n            padding: 12px 20px !important; `n            color: #333 !important; `n            text-decoration: none !important; `n            transition: all 0.3s !important; `n        }`n        .user-dropdown a:hover { background: #f5f5f5 !important; color: #e74c3c !important; }`n    </style>`n    <script>`n        function toggleUserDropdown() {`n            document.getElementById("userDropdown").classList.toggle("show");`n        }`n`n        // Close dropdown when clicking outside`n        window.onclick = function(event) {`n            if (!event.target.matches(".user-btn") && !event.target.matches(".user-btn *")) {`n                var dropdowns = document.getElementsByClassName("user-dropdown");`n                for (var i = 0; i < dropdowns.length; i++) {`n                    var openDropdown = dropdowns[i];`n                    if (openDropdown.classList.contains("show")) {`n                        openDropdown.classList.remove("show");`n                    }`n                }`n            }`n        }`n    </script>
+    <script src="${pageContext.request.contextPath}/resources/js/script-new.js"></script>
+    
+    <style>
+        /* Alert styles */
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        /* Note box styles */
+        .note-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+        
+        .note-box p {
+            margin: 5px 0;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        .note-box i {
+            color: #007bff;
+            margin-right: 8px;
+        }
+        
+        
+        /* Price note styles */
+        .price-note {
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 3px;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        
+        /* Select styles */
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: white;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+        
+    </style>
+    
     <script>
         // User dropdown function
         function toggleUserDropdown() {
@@ -243,6 +376,82 @@
                 dropdown.style.display = 'none';
             }
         });
+        
+        // Hàm định dạng tiền tệ (tương tự như trong cart.jsp)
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN').format(amount);
+        }
+        
+        // Toggle other error description field
+        function toggleOtherError() {
+            const loaiLoiSelect = document.getElementById('loaiLoi');
+            const moTaLoiKhacGroup = document.getElementById('moTaLoiKhacGroup');
+            const moTaLoiKhacTextarea = document.getElementById('moTaLoiKhac');
+            
+            if (loaiLoiSelect.value === 'Khác') {
+                moTaLoiKhacGroup.style.display = 'block';
+                moTaLoiKhacTextarea.required = true;
+            } else {
+                moTaLoiKhacGroup.style.display = 'none';
+                moTaLoiKhacTextarea.required = false;
+                moTaLoiKhacTextarea.value = '';
+            }
+        }
+        
+        // Update estimated price based on error type
+        function updateEstimatedPrice() {
+            const loaiLoiSelect = document.getElementById('loaiLoi');
+            const chiPhiInput = document.getElementById('chiPhiDuKien');
+            const priceNote = document.getElementById('priceNote');
+            
+            const selectedValue = loaiLoiSelect.value;
+            
+            // Reset
+            chiPhiInput.readOnly = false;
+            chiPhiInput.value = '';
+            priceNote.style.display = 'none';
+            priceNote.textContent = '';
+            
+            switch(selectedValue) {
+                case 'Thay pin':
+                    chiPhiInput.value = formatCurrency(700000);
+                    chiPhiInput.readOnly = true;
+                    chiPhiInput.required = true;
+                    break;
+                case 'Thay màn hình':
+                    chiPhiInput.value = formatCurrency(1500000);
+                    chiPhiInput.readOnly = true;
+                    chiPhiInput.required = true;
+                    break;
+                case 'Bảo hành máy lỗi do người bán':
+                    chiPhiInput.value = formatCurrency(0);
+                    chiPhiInput.readOnly = true;
+                    chiPhiInput.required = true;
+                    break;
+                case 'Hư main':
+                    chiPhiInput.value = formatCurrency(1000000);
+                    chiPhiInput.readOnly = true;
+                    chiPhiInput.required = true;
+                    break;
+                case 'Ép kính':
+                    chiPhiInput.value = formatCurrency(500000);
+                    chiPhiInput.readOnly = true;
+                    chiPhiInput.required = true;
+                    break;
+                case 'Khác':
+                    chiPhiInput.value = '';
+                    chiPhiInput.readOnly = false;
+                    chiPhiInput.required = false;
+                    chiPhiInput.placeholder = 'Cửa hàng sẽ liên hệ với bạn để báo giá chính xác';
+                    priceNote.style.display = 'block';
+                    priceNote.textContent = 'Cửa hàng sẽ liên hệ với bạn để báo giá chính xác';
+                    break;
+                default:
+                    chiPhiInput.placeholder = 'Chọn loại lỗi để hiển thị giá dự kiến...';
+                    chiPhiInput.required = false;
+                    break;
+            }
+        }
     </script>
 </body>
 </html>

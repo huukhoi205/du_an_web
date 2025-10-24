@@ -1,7 +1,7 @@
 package controller;
 
 import dao.ProfileDAO;
-import dao.ProfileDAO.UserProfile;
+import model.UserProfile;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

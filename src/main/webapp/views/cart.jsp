@@ -17,10 +17,18 @@
         cartItems = new java.util.ArrayList<>();
     }
     
-    // Lấy total amount từ request attribute
-    java.math.BigDecimal totalAmount = (java.math.BigDecimal) request.getAttribute("totalAmount");
-    if (totalAmount == null) {
-        totalAmount = java.math.BigDecimal.ZERO;
+    // Tính tổng tiền từ cart items
+    java.math.BigDecimal totalAmount = java.math.BigDecimal.ZERO;
+    for (CartItem item : cartItems) {
+        if (item.getGia() != null && !item.getGia().isEmpty()) {
+            try {
+                java.math.BigDecimal itemPrice = new java.math.BigDecimal(item.getGia());
+                java.math.BigDecimal itemTotal = itemPrice.multiply(new java.math.BigDecimal(item.getQuantity()));
+                totalAmount = totalAmount.add(itemTotal);
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid price format for item: " + item.getProductName());
+            }
+        }
     }
     
     // Debug logging
@@ -65,7 +73,7 @@
 
                 <!-- Header Actions -->
                 <div class="header-actions">
-                    <a href="cart.jsp" class="icon-btn" title="Giỏ hàng">
+                    <a href="${pageContext.request.contextPath}/cart" class="icon-btn" title="Giỏ hàng">
                         <i class="fas fa-shopping-cart"></i>
                     </a>
                     <a href="wishlist.jsp" class="icon-btn" title="Yêu thích">
@@ -81,8 +89,9 @@
                                 <i class="fas fa-chevron-down"></i>
                             </button>
                             <div class="dropdown-menu">
-                                <a href="profile.jsp">Thông tin cá nhân</a>
-                                <a href="orders.jsp">Đơn hàng của tôi</a>
+                                <a href="${pageContext.request.contextPath}/profile">Trang cá nhân</a>
+                                <a href="${pageContext.request.contextPath}/views/order-success.jsp">Đơn hàng</a>
+                                <a href="${pageContext.request.contextPath}/user-services">Thu mua - Sửa chữa</a>
                                 <a href="logout.jsp">Đăng xuất</a>
                             </div>
                         </div>
@@ -106,21 +115,24 @@
             <div class="nav-content">
                 <button class="menu-toggle">
                     <i class="fas fa-bars"></i>
-                    <span>DANH MỤC<br>SẢN PHẨM</span>
+                    <span>DANH MỤC</span>
                 </button>
 
                 <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="${pageContext.request.contextPath}/views/index.jsp" class="nav-link">TRANG CHỦ</a>
+                    </li>
                     <li class="nav-item dropdown">
-                        <a href="${pageContext.request.contextPath}/views/new-phones.jsp" class="nav-link">
+                        <a href="${pageContext.request.contextPath}/products" class="nav-link">
                             ĐIỆN THOẠI MỚI
                             <i class="fas fa-chevron-down"></i>
                         </a>
                         <div class="dropdown-menu">
-                            <a href="${pageContext.request.contextPath}/views/new-phones.jsp">iPhone</a>
-                            <a href="${pageContext.request.contextPath}/views/new-phones.jsp">Samsung</a>
-                            <a href="${pageContext.request.contextPath}/views/new-phones.jsp">Xiaomi</a>
-                            <a href="${pageContext.request.contextPath}/views/new-phones.jsp">OPPO</a>
-                            <a href="${pageContext.request.contextPath}/views/new-phones.jsp">Vivo</a>
+                            <a href="${pageContext.request.contextPath}/products?brand=Apple">iPhone</a>
+                            <a href="${pageContext.request.contextPath}/products?brand=Samsung">Samsung</a>
+                            <a href="${pageContext.request.contextPath}/products?brand=Xiaomi">Xiaomi</a>
+                            <a href="${pageContext.request.contextPath}/products?brand=OPPO">OPPO</a>
+                            <a href="${pageContext.request.contextPath}/products?brand=Vivo">Vivo</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -138,7 +150,7 @@
                         <a href="${pageContext.request.contextPath}/views/exchange.jsp" class="nav-link">THU ĐIỆN THOẠI</a>
                     </li>
                     <li class="nav-item">
-                        <a href="${pageContext.request.contextPath}/views/repair.jsp" class="nav-link">SỬA CHỮA</a>
+                        <a href="${pageContext.request.contextPath}/repair" class="nav-link">SỬA CHỮA</a>
                     </li>
                 </ul>
             </div>
@@ -172,7 +184,7 @@
                                 <div class="item-details">
                                     <span class="quantity-controls">
                                         <button class="qty-btn minus" onclick="updateQuantity(<%= item.getId() %>, <%= item.getQuantity() - 1 %>)">—</button>
-                                        <input type="number" value="<%= item.getQuantity() %>" min="1" class="qty-input" onchange="updateQuantity(<%= item.getId() %>, this.value)">
+                                        <input type="number" value="<%= item.getQuantity() %>" min="1" class="qty-input" data-unit-price="<%= item.getGia() %>" onchange="updateQuantity(<%= item.getId() %>, this.value)">
                                         <button class="qty-btn plus" onclick="updateQuantity(<%= item.getId() %>, <%= item.getQuantity() + 1 %>)">+</button>
                                     </span>
                                     <% if (item.getStorage() != null && !item.getStorage().isEmpty()) { %>
@@ -479,9 +491,32 @@
 
             // Update total function
             function updateTotal() {
-                // This would calculate total based on quantities
-                // For now, keeping static total
+                let total = 0;
+                const cartItems = document.querySelectorAll('.cart-item');
+                
+                cartItems.forEach(item => {
+                    const quantityElement = item.querySelector('.qty-input');
+                    
+                    if (quantityElement) {
+                        const unitPrice = parseFloat(quantityElement.getAttribute('data-unit-price') || 0);
+                        const quantity = parseInt(quantityElement.value) || 0;
+                        total += unitPrice * quantity;
+                    }
+                });
+                
+                const totalElement = document.getElementById('totalAmount');
+                if (totalElement) {
+                    totalElement.textContent = formatCurrency(total) + ' ₫';
+                }
             }
+            
+            // Format currency function
+            function formatCurrency(amount) {
+                return new Intl.NumberFormat('vi-VN').format(amount);
+            }
+            
+            // Update total on page load
+            updateTotal();
         });
 
         // Cart management functions
@@ -499,12 +534,36 @@
                 currentItemId = itemId;
                 showConfirmModal();
             } else {
-                // Update quantity and recalculate total
-                updateItemQuantity(itemId, newQuantity);
-                window.location.href = '${pageContext.request.contextPath}/cart?action=update&itemId=' + itemId + '&quantity=' + newQuantity;
+                // Create a form to submit POST request
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '${pageContext.request.contextPath}/cart';
+                
+                // Add form fields
+                const actionField = document.createElement('input');
+                actionField.type = 'hidden';
+                actionField.name = 'action';
+                actionField.value = 'update';
+                form.appendChild(actionField);
+                
+                const itemIdField = document.createElement('input');
+                itemIdField.type = 'hidden';
+                itemIdField.name = 'itemId';
+                itemIdField.value = itemId;
+                form.appendChild(itemIdField);
+                
+                const quantityField = document.createElement('input');
+                quantityField.type = 'hidden';
+                quantityField.name = 'quantity';
+                quantityField.value = newQuantity;
+                form.appendChild(quantityField);
+                
+                // Submit form
+                document.body.appendChild(form);
+                form.submit();
             }
         }
-
+        
         function updateItemQuantity(itemId, newQuantity) {
             // Find the item in the cart and update its quantity display
             const itemElement = document.querySelector(`[data-item-id="${itemId}"]`);
@@ -517,10 +576,9 @@
                 // Update item total price
                 const priceElement = itemElement.querySelector('.current-price');
                 if (priceElement) {
-                    const priceText = priceElement.textContent;
-                    const price = parseFloat(priceText.replace(/[^\d]/g, '')) / newQuantity; // Get original price per unit
-                    const newTotal = price * newQuantity;
-                    priceElement.textContent = formatCurrency(newTotal);
+                    const unitPrice = parseFloat(qtyInput.getAttribute('data-unit-price') || 0);
+                    const newTotal = unitPrice * newQuantity;
+                    priceElement.textContent = formatCurrency(newTotal) + ' ₫';
                 }
                 
                 // Recalculate total

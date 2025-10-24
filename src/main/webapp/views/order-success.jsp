@@ -15,8 +15,15 @@
     String phoneNumber = (String) session.getAttribute("phoneNumber");
     String deliveryAddress = (String) session.getAttribute("deliveryAddress");
     String paymentMethod = (String) session.getAttribute("paymentMethod");
+    Double subtotal = (Double) session.getAttribute("subtotal");
+    Double shippingFee = (Double) session.getAttribute("shippingFee");
     Double totalAmount = (Double) session.getAttribute("totalAmount");
     java.sql.Timestamp orderDate = (java.sql.Timestamp) session.getAttribute("orderDate");
+    
+    // Set default values if null
+    if (subtotal == null) subtotal = 0.0;
+    if (shippingFee == null) shippingFee = 0.0;
+    if (totalAmount == null) totalAmount = 0.0;
     
     // Format currency
     java.text.NumberFormat formatter = java.text.NumberFormat.getInstance(new java.util.Locale("vi", "VN"));
@@ -102,7 +109,7 @@
             <div class="nav-content">
                 <button class="menu-toggle">
                     <i class="fas fa-bars"></i>
-                    <span>DANH MỤC<br>SẢN PHẨM</span>
+                    <span>DANH MỤC</span>
                 </button>
 
                 <ul class="nav-menu">
@@ -134,7 +141,7 @@
                         <a href="${pageContext.request.contextPath}/views/exchange.jsp" class="nav-link">THU ĐIỆN THOẠI</a>
                     </li>
                     <li class="nav-item">
-                        <a href="${pageContext.request.contextPath}/views/repair.jsp" class="nav-link">SỬA CHỮA</a>
+                        <a href="${pageContext.request.contextPath}/repair" class="nav-link">SỬA CHỮA</a>
                     </li>
                 </ul>
             </div>
@@ -201,14 +208,22 @@
                                 <span class="info-value"><%= deliveryAddress %></span>
                             </div>
                             <% } %>
+                            <div class="info-item">
+                                <span class="info-label">Tạm tính:</span>
+                                <span class="info-value">
+                                    <%= formatter.format(subtotal) %> ₫
+                                </span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Phí vận chuyển:</span>
+                                <span class="info-value">
+                                    <%= formatter.format(shippingFee) %> ₫
+                                </span>
+                            </div>
                             <div class="info-item total-item">
                                 <span class="info-label">Tổng tiền:</span>
                                 <span class="info-value total-amount">
-                                    <% if (totalAmount != null) { %>
-                                        <%= formatter.format(totalAmount) %> ₫
-                                    <% } else { %>
-                                        0 ₫
-                                    <% } %>
+                                    <%= formatter.format(totalAmount) %> ₫
                                 </span>
                             </div>
                         </div>

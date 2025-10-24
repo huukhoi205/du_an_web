@@ -1,5 +1,6 @@
 package controller;
 
+import dao.CartDAO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,22 +27,59 @@ public class CartServlet extends HttpServlet {
         response.setHeader("Content-Type", "text/html; charset=UTF-8");
         
         HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute("userId");
         
-        // Get cart items from session
+        // Get cart items from session or database
         List<CartItem> cartItems = (List<CartItem>) session.getAttribute("cartItems");
+        
+        // If user is logged in, load from database and merge with session cart
+        if (userId != null) {
+            CartDAO cartDAO = new CartDAO();
+            List<CartItem> dbCartItems = cartDAO.loadCartItems(userId);
+            
+            if (cartItems == null || cartItems.isEmpty()) {
+                // No session cart, use database cart
+                cartItems = dbCartItems;
+                session.setAttribute("cartItems", cartItems);
+                System.out.println("Loaded cart from database for user " + userId + ": " + cartItems.size() + " items");
+            } else if (!dbCartItems.isEmpty()) {
+                // Merge session cart with database cart
+                // For now, prioritize session cart (user's current session)
+                // Database cart will be overwritten when user makes changes
+                System.out.println("User " + userId + " has session cart with " + cartItems.size() + " items, database has " + dbCartItems.size() + " items");
+                System.out.println("Using session cart, will save to database when modified");
+            }
+        }
+        
+        // If no cart items, create empty list
         if (cartItems == null) {
             cartItems = new ArrayList<>();
             session.setAttribute("cartItems", cartItems);
         }
         
-        // Handle add to cart action
+        // Handle add to cart action - ONLY for POST requests to prevent refresh issues
         String action = request.getParameter("action");
-        if ("add".equals(action)) {
+        boolean cartModified = false;
+        
+        // Only process actions if this is a POST request (not a GET/refresh)
+        if ("add".equals(action) && "POST".equals(request.getMethod())) {
             addToCart(request, session, cartItems);
+            cartModified = true;
         } else if ("remove".equals(action)) {
             removeFromCart(request, session, cartItems);
+            cartModified = true;
         } else if ("update".equals(action)) {
             updateQuantity(request, session, cartItems);
+            cartModified = true;
+        }
+        
+        // Save cart to database if user is logged in and cart was modified
+        if (userId != null && cartModified) {
+            CartDAO cartDAO = new CartDAO();
+            boolean saved = cartDAO.saveCartItems(userId, cartItems);
+            System.out.println("Cart saved to database for user " + userId + ": " + saved + " (items: " + cartItems.size() + ")");
+        } else if (userId == null && cartModified) {
+            System.out.println("Cart modified but user not logged in, only saved to session");
         }
         
         // Calculate total amount
@@ -63,7 +101,45 @@ public class CartServlet extends HttpServlet {
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        doGet(request, response);
+        
+        // Set UTF-8 encoding
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        
+        HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute("userId");
+        
+        // Get cart items from session
+        List<CartItem> cartItems = (List<CartItem>) session.getAttribute("cartItems");
+        if (cartItems == null) {
+            cartItems = new ArrayList<>();
+            session.setAttribute("cartItems", cartItems);
+        }
+        
+        // Handle add to cart action
+        String action = request.getParameter("action");
+        boolean cartModified = false;
+        
+        if ("add".equals(action)) {
+            addToCart(request, session, cartItems);
+            cartModified = true;
+        } else if ("remove".equals(action)) {
+            removeFromCart(request, session, cartItems);
+            cartModified = true;
+        } else if ("update".equals(action)) {
+            updateQuantity(request, session, cartItems);
+            cartModified = true;
+        }
+        
+        // Save cart to database if user is logged in and cart was modified
+        if (userId != null && cartModified) {
+            CartDAO cartDAO = new CartDAO();
+            boolean saved = cartDAO.saveCartItems(userId, cartItems);
+            System.out.println("Cart saved to database for user " + userId + ": " + saved + " (items: " + cartItems.size() + ")");
+        }
+        
+        // Redirect to cart page to prevent refresh issues (POST-Redirect-GET pattern)
+        response.sendRedirect(request.getContextPath() + "/cart");
     }
     
     private void addToCart(HttpServletRequest request, HttpSession session, List<CartItem> cartItems) {
@@ -211,22 +287,29 @@ public class CartServlet extends HttpServlet {
         String itemId = request.getParameter("itemId");
         String quantity = request.getParameter("quantity");
         
+        System.out.println("updateQuantity called - itemId: " + itemId + ", quantity: " + quantity);
+        
         if (itemId != null && quantity != null) {
             try {
                 long id = Long.parseLong(itemId);
                 int qty = Integer.parseInt(quantity);
                 
+                System.out.println("Looking for item with ID: " + id + " in cart with " + cartItems.size() + " items");
+                
                 for (CartItem item : cartItems) {
+                    System.out.println("Checking item ID: " + item.getId() + ", Product: " + item.getProductName() + ", Current Qty: " + item.getQuantity());
                     if (item.getId() == id) {
                         if (qty <= 0) {
                             cartItems.remove(item);
+                            System.out.println("Item removed from cart");
                         } else {
                             item.setQuantity(qty);
+                            System.out.println("Quantity updated for " + item.getProductName() + " from " + item.getQuantity() + " to " + qty);
                         }
                         break;
                     }
                 }
-                System.out.println("Quantity updated for item " + itemId + " to " + quantity);
+                System.out.println("Quantity update completed for item " + itemId + " to " + quantity);
             } catch (NumberFormatException e) {
                 System.err.println("Invalid item ID or quantity: " + itemId + ", " + quantity);
             }

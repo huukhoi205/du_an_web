@@ -73,7 +73,7 @@
             </div>
                 
                 <div class="header-actions">
-                    <a href="${pageContext.request.contextPath}/views/cart.jsp" class="icon-btn" title="Giỏ hàng">
+                    <a href="${pageContext.request.contextPath}/cart" class="icon-btn" title="Giỏ hàng">
                         <i class="fas fa-shopping-cart"></i>
                     </a>
                     <a href="${pageContext.request.contextPath}/views/wishlist.jsp" class="icon-btn" title="Yêu thích">
@@ -112,25 +112,45 @@
     <nav class="navbar">
         <div class="container">
             <div class="nav-content">
-            <button class="menu-toggle">
+                <button class="menu-toggle">
                     <i class="fas fa-bars"></i>
-                    <span>DANH MỤC<br>SẢN PHẨM</span>
-            </button>
+                    <span>DANH MỤC</span>
+                </button>
                 <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="${pageContext.request.contextPath}/views/index.jsp" class="nav-link">TRANG CHỦ</a>
+                    </li>
                     <li class="nav-item dropdown">
-                        <a href="${pageContext.request.contextPath}/views/new-phones.jsp" class="nav-link">
-                            ĐIỆN THOẠI MỚI <i class="fas fa-chevron-down"></i>
+                        <a href="${pageContext.request.contextPath}/products" class="nav-link">
+                            ĐIỆN THOẠI MỚI
+                            <i class="fas fa-chevron-down"></i>
                         </a>
                         <div class="dropdown-menu">
-                            <a href="${pageContext.request.contextPath}/views/new-phones.jsp">iPhone</a>
-                            <a href="${pageContext.request.contextPath}/views/new-phones.jsp">Samsung</a>
-                            <a href="${pageContext.request.contextPath}/views/new-phones.jsp">Xiaomi</a>
+                            <a href="${pageContext.request.contextPath}/products?brand=Apple">iPhone</a>
+                            <a href="${pageContext.request.contextPath}/products?brand=Samsung">Samsung</a>
+                            <a href="${pageContext.request.contextPath}/products?brand=Xiaomi">Xiaomi</a>
+                            <a href="${pageContext.request.contextPath}/products?brand=OPPO">OPPO</a>
+                            <a href="${pageContext.request.contextPath}/products?brand=Vivo">Vivo</a>
                         </div>
                     </li>
-                    <li class="nav-item"><a href="${pageContext.request.contextPath}/views/used-phones.jsp" class="nav-link">ĐIỆN THOẠI CŨ</a></li>
-                    <li class="nav-item"><a href="${pageContext.request.contextPath}/views/exchange.jsp" class="nav-link">THU ĐIỆN THOẠI</a></li>
-                    <li class="nav-item"><a href="${pageContext.request.contextPath}/views/repair.jsp" class="nav-link">SỬA CHỮA</a></li>
-            </ul>
+                    <li class="nav-item dropdown">
+                        <a href="${pageContext.request.contextPath}/views/used-phones.jsp" class="nav-link">
+                            ĐIỆN THOẠI CŨ
+                            <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="${pageContext.request.contextPath}/views/used-phones.jsp">iPhone Cũ</a>
+                            <a href="${pageContext.request.contextPath}/views/used-phones.jsp">Samsung Cũ</a>
+                            <a href="${pageContext.request.contextPath}/views/used-phones.jsp">Tất cả điện thoại cũ</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="${pageContext.request.contextPath}/views/exchange.jsp" class="nav-link">THU ĐIỆN THOẠI</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="${pageContext.request.contextPath}/repair" class="nav-link">SỬA CHỮA</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -526,11 +546,39 @@
         }
 
         function addToCart(maSP, tenSP, gia) {
-            // Build URL to add to cart
-            let url = '${pageContext.request.contextPath}/cart?action=add&product=' + encodeURIComponent(tenSP) + 
-                      '&maSP=' + maSP + '&gia=' + gia;
+            // Create a form to submit POST request
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '${pageContext.request.contextPath}/cart';
             
-            window.location.href = url;
+            // Add form fields
+            const actionField = document.createElement('input');
+            actionField.type = 'hidden';
+            actionField.name = 'action';
+            actionField.value = 'add';
+            form.appendChild(actionField);
+            
+            const productField = document.createElement('input');
+            productField.type = 'hidden';
+            productField.name = 'product';
+            productField.value = tenSP;
+            form.appendChild(productField);
+            
+            const maSPField = document.createElement('input');
+            maSPField.type = 'hidden';
+            maSPField.name = 'maSP';
+            maSPField.value = maSP;
+            form.appendChild(maSPField);
+            
+            const giaField = document.createElement('input');
+            giaField.type = 'hidden';
+            giaField.name = 'gia';
+            giaField.value = gia;
+            form.appendChild(giaField);
+            
+            // Submit form
+            document.body.appendChild(form);
+            form.submit();
         }
 
         function showLoginModal(maSP, tenSP, gia) {

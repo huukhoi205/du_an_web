@@ -54,6 +54,13 @@ public class OrderServlet extends HttpServlet {
             System.out.println("Cart items was null, created empty list");
         } else {
             System.out.println("Cart items count: " + cartItems.size());
+            // Debug: Print each item's details
+            for (controller.CartServlet.CartItem item : cartItems) {
+                System.out.println("OrderServlet - Item: " + item.getProductName() + 
+                                 ", ID: " + item.getId() + 
+                                 ", Quantity: " + item.getQuantity() + 
+                                 ", Price: " + item.getGia());
+            }
         }
         
         // For testing - add sample cart items if cart is empty
@@ -165,16 +172,26 @@ public class OrderServlet extends HttpServlet {
             order.setTrangThai("ChoXacNhan"); // Use enum value from database
             order.setNgayDat(new java.sql.Timestamp(System.currentTimeMillis()));
             
-            // Calculate total amount
-            double totalAmount = 0.0;
+            // Calculate subtotal (products only)
+            double subtotal = 0.0;
             for (controller.CartServlet.CartItem item : cartItems) {
                 if (item.getGia() != null && !item.getGia().isEmpty()) {
                     double itemPrice = Double.parseDouble(item.getGia());
-                    totalAmount += itemPrice * item.getQuantity();
+                    subtotal += itemPrice * item.getQuantity();
                     System.out.println("Item: " + item.getProductName() + ", Price: " + itemPrice + ", Qty: " + item.getQuantity() + ", Total: " + (itemPrice * item.getQuantity()));
                 }
             }
-            System.out.println("Total order amount: " + totalAmount);
+            
+            // Calculate shipping fee based on delivery address
+            double shippingFee = 0.0;
+            if (deliveryAddress != null && !deliveryAddress.trim().isEmpty()) {
+                shippingFee = ShippingCalculator.calculateShippingFee(deliveryAddress);
+                System.out.println("Shipping fee calculated: " + shippingFee + " for address: " + deliveryAddress);
+            }
+            
+            // Calculate total amount (subtotal + shipping fee)
+            double totalAmount = subtotal + shippingFee;
+            System.out.println("Subtotal: " + subtotal + ", Shipping fee: " + shippingFee + ", Total amount: " + totalAmount);
             order.setTongTien(new java.math.BigDecimal(totalAmount));
             
             // Insert order directly using connection
@@ -239,6 +256,8 @@ public class OrderServlet extends HttpServlet {
                 session.setAttribute("phoneNumber", phoneNumber);
                 session.setAttribute("deliveryAddress", deliveryAddress);
                 session.setAttribute("paymentMethod", paymentMethod);
+                session.setAttribute("subtotal", subtotal);
+                session.setAttribute("shippingFee", shippingFee);
                 session.setAttribute("totalAmount", totalAmount);
                 session.setAttribute("orderDate", new java.sql.Timestamp(System.currentTimeMillis()));
                 
